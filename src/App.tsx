@@ -43,7 +43,7 @@ const App = () => {
       const APP_ID = import.meta.env.VITE_RECLAIM_APP_ID;
       const APP_SECRET = import.meta.env.VITE_RECLAIM_APP_SECRET;
 
-      const PROVIDER_ID = '6d3f6753-7ee6-49ee-a545-62f1b1822ae5';
+      const PROVIDER_ID = '02394885-47b8-4a20-833d-0801ccccc9e4';
 
       // Check if device is mobile
       const isMobile =
@@ -130,6 +130,7 @@ const App = () => {
   };
 
   const ukCode = `import { ReclaimClient } from '@reclaimprotocol/js-sdk';
+  
   const handleVerification = async () => {
   
   const reclaimProofRequest = await ReclaimProofRequest.init(APP_ID, APP_SECRET, PROVIDER_ID);
@@ -142,8 +143,8 @@ const App = () => {
     onError: (error) => {
      console.error('Verification failed', error);
     },
-});
-   
+  });
+}  
 `;
 
   // QR Code SVG component for better readability
