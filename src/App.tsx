@@ -185,7 +185,7 @@ const App = () => {
                     <path d="M16 2L2 16L16 30L30 16L16 2Z" stroke="currentColor" strokeWidth="2"></path>
                     <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="currentColor"></path>
                   </svg>
-                  <span className="text-xl font-bold text-gray-900">Reclaim Protocol</span>
+                  <span className="text-xl font-bold text-gray-900">Reclaim Age Verification</span>
                 </div>
               </a>
             </div>
@@ -971,7 +971,7 @@ const App = () => {
                     <path d="M16 2L2 16L16 30L30 16L16 2Z" stroke="currentColor" strokeWidth="2"></path>
                     <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="currentColor"></path>
                   </svg>
-                  <span className="text-xl font-bold text-gray-900">Reclaim Protocol</span>
+                  <span className="text-xl font-bold text-gray-900">Reclaim Age Verification</span>
                 </div>
                 <nav className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-8">
                   <a
