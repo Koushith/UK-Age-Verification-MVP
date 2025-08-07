@@ -1,44 +1,11 @@
-import { useState } from 'react';
 import { Button } from './components/ui/button';
-import {
-  CheckCircle,
-  Shield,
-  Zap,
-  Copy,
-  CheckIcon,
-  Menu,
-  Rocket,
-  Users,
-  Building2,
-  Globe,
-  Wallet,
-  Brain,
-} from 'lucide-react';
+import { CheckCircle, Shield, Zap, Copy, Menu, Rocket, Users, Building2, Globe, Wallet, Brain } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
 import { Highlight, themes } from 'prism-react-renderer';
-import { cn } from './lib/utils';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './components/ui/card';
 import { Badge } from './components/ui/badge';
-import { Progress } from './components/ui/progress';
 
 const App = () => {
-  const [copied, setCopied] = useState(false);
-  const [activeTab, setActiveTab] = useState('uk');
-
-  const sdkCode = `npm install @reclaimprotocol/js-sdk
-
-const { verifyAge } = require('@reclaimprotocol/js-sdk');
-
-const result = await verifyAge({
-  minAge: 18,
-  onSuccess: (proof) => {
-    console.log('Age verified!', proof);
-  },
-  onFailure: (error) => {
-    console.error('Verification failed:', error);
-  }
-});`;
-
   const ukCode = `import { ReclaimClient } from '@reclaimprotocol/js-sdk';
 
 // Initialize Reclaim for UK age verification
@@ -54,52 +21,7 @@ const result = await reclaim.verifyAge({
   onError: (error) => console.error('❌ Failed:', error)
 });`;
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(sdkCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const copyText = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const escapeHtml = (code: string) => code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
   // extremely small, dependency-free highlighter for demo purposes
-  const highlightCode = (code: string) => {
-    const escaped = escapeHtml(code);
-    // comments
-    let highlighted = escaped.replace(/(\/\/.*$)/gm, '<span class="token comment">$1</span>');
-    // strings (single, double, template)
-    highlighted = highlighted.replace(/'([^'\\]|\\.)*'/g, (m) => `<span class="token string">${m}<\/span>`);
-    highlighted = highlighted.replace(/"([^"\\]|\\.)*"/g, (m: string) => `<span class=\"token string\">${m}<\/span>`);
-    highlighted = highlighted.replace(/`([^`\\]|\\.)*`/g, (m: string) => `<span class=\"token string\">${m}<\/span>`);
-    // numbers
-    highlighted = highlighted.replace(/\b\d+(?:\.\d+)?\b/g, '<span class="token number">$&</span>');
-    // keywords (including 'as')
-    highlighted = highlighted.replace(
-      /\b(import|from|const|let|var|new|return|await|async|try|catch|throw|if|else|export|default|as)\b/g,
-      '<span class="token keyword">$1</span>'
-    );
-    // object property keys (key: value)
-    highlighted = highlighted.replace(/\b([a-zA-Z_][\w]*)\s*:(?=\s)/g, '<span class="token property">$1</span>:');
-    // import specifiers: import { A, B as C } from '...'
-    highlighted = highlighted.replace(/(import\s*)\{([^}]+)\}/g, (m: string, imp: string, inside: string) => {
-      const replaced = inside.replace(/\b([A-Za-z_][\w]*)\b/g, (id: string) => {
-        if (/^(as)$/.test(id)) return `<span class=\"token keyword\">${id}<\/span>`;
-        return `<span class=\"token variable\">${id}<\/span>`;
-      });
-      return `${imp}{${replaced}}`;
-    });
-    // function names (simple)
-    highlighted = highlighted.replace(/([a-zA-Z_]\w*)\s*(?=\()/g, '<span class="token function">$1</span>');
-    return highlighted;
-  };
-
-  const highlightedUkCode = useState(() => highlightCode(ukCode), [ukCode]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -209,7 +131,7 @@ const result = await reclaim.verifyAge({
                 </div>
                 <div className="flex-1">
                   <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8">
-                    <Tabs defaultValue="uk" className="w-full" onValueChange={setActiveTab}>
+                    <Tabs defaultValue="uk" className="w-full">
                       <TabsList className="inline-flex w-full items-center justify-start bg-gray-800/50 p-1 rounded-lg gap-1 overflow-x-auto whitespace-nowrap">
                         <TabsTrigger
                           value="uk"
@@ -425,15 +347,17 @@ const result = await reclaim.verifyAge({
                         <div className="grid grid-cols-3 gap-4">
                           <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
                             <div className="text-xs text-gray-400">Accuracy</div>
-                            <div className="mt-2 text-2xl font-semibold text-emerald-400">99.9%</div>
-                            <Progress value={100} className="mt-3 bg-white/10" />
+                            <div className="mt-2 text-2xl font-semibold text-emerald-400">100%</div>
+                            <div className="mt-3 h-2 w-full rounded-full bg-white/10">
+                              <div className="h-2 w-full rounded-full bg-emerald-400/80"></div>
+                            </div>
                           </div>
 
                           <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
                             <div className="text-xs text-gray-400">Avg time</div>
-                            <div className="mt-2 text-2xl font-semibold text-white">1.2s</div>
+                            <div className="mt-2 text-2xl font-semibold text-white">3-10s</div>
                             <div className="mt-3 h-2 w-full rounded-full bg-white/10">
-                              <div className="h-2 w-3/4 rounded-full bg-emerald-400/80"></div>
+                              <div className="h-2 w-full rounded-full bg-emerald-400/80"></div>
                             </div>
                           </div>
 
@@ -563,9 +487,9 @@ const result = await reclaim.verifyAge({
 
           {/* CTA Section */}
           <div className="mx-auto max-w-7xl py-16 sm:py-20 px-6">
-            <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-12 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-16 lg:flex lg:gap-x-16 lg:pt-0">
+            <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-12 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-16 lg:pt-0">
               <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
-              <div className="relative mx-auto w-full max-w-lg text-center lg:mx-0 lg:flex-auto lg:py-20 lg:text-left">
+              <div className="relative z-10 mx-auto w-full max-w-2xl text-center lg:py-20">
                 <h2 className="text-4xl font-bold tracking-tight text-white">
                   Ready to Get Started with
                   <br />
@@ -576,7 +500,7 @@ const result = await reclaim.verifyAge({
                 <p className="mt-4 text-[15px] leading-relaxed text-gray-300">
                   Join hundreds of companies already using Reclaim for privacy-preserving age verification.
                 </p>
-                <div className="mt-8 flex items-center justify-center gap-x-4 lg:justify-start">
+                <div className="mt-8 flex items-center justify-center gap-x-4">
                   <Button
                     onClick={() => {
                       window.open('https://cal.com/reclaimprotocol/30min', '_blank');
@@ -586,43 +510,6 @@ const result = await reclaim.verifyAge({
                   >
                     Talk to Founder
                   </Button>
-                </div>
-              </div>
-              <div className="relative mt-12 lg:mt-0">
-                <div className="w-full max-w-xl translate-x-0 lg:translate-x-8">
-                  <div className="rounded-lg bg-gray-800/50 p-4 backdrop-blur-sm">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full bg-emerald-500/10 flex items-center justify-center ring-1 ring-inset ring-emerald-500/20">
-                          <CheckCircle className="h-4 w-4 text-emerald-400" />
-                        </div>
-                        <div>
-                          <div className="text-[14px] font-medium text-white">Age Verified Successfully</div>
-                          <div className="text-[13px] text-gray-400">Verification completed in 1.2s</div>
-                        </div>
-                      </div>
-                      <div className="bg-gray-900/50 rounded-lg p-3 ring-1 ring-inset ring-white/10">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="text-[13px] font-medium text-gray-200">Verification Details</div>
-                          <div className="text-[12px] text-emerald-400">Verified ✓</div>
-                        </div>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-[13px] text-gray-300">
-                            <div className="h-1 w-1 rounded-full bg-emerald-500"></div>
-                            Age 18+ confirmed
-                          </div>
-                          <div className="flex items-center gap-2 text-[13px] text-gray-300">
-                            <div className="h-1 w-1 rounded-full bg-emerald-500"></div>
-                            No personal data stored
-                          </div>
-                          <div className="flex items-center gap-2 text-[13px] text-gray-300">
-                            <div className="h-1 w-1 rounded-full bg-emerald-500"></div>
-                            Cryptographic proof valid
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -651,14 +538,17 @@ const result = await reclaim.verifyAge({
                   <span className="text-xl font-bold text-gray-900">Reclaim Protocol</span>
                 </div>
                 <nav className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-8">
-                  <a href="/privacy" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  <a
+                    href="https://reclaimprotocol.notion.site/Privacy-Policy-Reclaim-Protocol-115275b816cb80ab94b8ca8616673658"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
                     Privacy Policy
                   </a>
-                  <a href="/terms" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                  <a
+                    href="https://reclaimprotocol.notion.site/Terms-of-Service-Reclaim-Protocol-13c275b816cb80b1a5ade76c6f2532dd"
+                    className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+                  >
                     Terms of Service
-                  </a>
-                  <a href="/contact" className="text-sm text-gray-600 hover:text-gray-900 transition-colors">
-                    Contact Us
                   </a>
                 </nav>
               </div>
@@ -713,7 +603,7 @@ const result = await reclaim.verifyAge({
               </div>
             </div>
             <div className="flex flex-col gap-4 border-t border-gray-200 pt-8 md:flex-row md:items-center md:justify-between">
-              <p className="text-sm text-gray-500">© 2024 Reclaim Protocol. Privacy-first age verification.</p>
+              <p className="text-sm text-gray-500">© 2025 Reclaim Protocol. Privacy-first age verification.</p>
               <a
                 href="https://twitter.com/reclaimprotocol"
                 target="_blank"
