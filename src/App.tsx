@@ -1,11 +1,134 @@
 import { Button } from './components/ui/button';
-import { CheckCircle, Shield, Zap, Copy, Menu, Rocket, Users, Building2, Globe, Wallet, Brain } from 'lucide-react';
+import {
+  CheckCircle,
+  Shield,
+  Zap,
+  Copy,
+  Menu,
+  Rocket,
+  Users,
+  Building2,
+  Globe,
+  Wallet,
+  Brain,
+  Camera,
+  LogIn,
+  Clock,
+} from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
 import { Highlight, themes } from 'prism-react-renderer';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './components/ui/card';
 import { Badge } from './components/ui/badge';
+import { Dialog, DialogContent, DialogTrigger } from './components/ui/dialog';
+import { useState } from 'react';
+import { ReclaimProofRequest } from '@reclaimprotocol/js-sdk';
+import { JSONTree } from 'react-json-tree';
+import QRCode from 'react-qr-code';
+import { useIsMobile } from './hooks/use-mobile';
 
 const App = () => {
+  const [requestUrl, setRequestUrl] = useState<string | null>(null);
+  const [proofs, setProofs] = useState<any[]>([]);
+  const [loadingState, setLoadingState] = useState({ type: 'none', step: 'none' });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const isMobile = useIsMobile();
+
+  const getVerificationReq = async () => {
+    setLoadingState({ type: 'provider', step: 'generating' });
+    try {
+      // Your credentials from the Reclaim Developer Portal
+      // Replace these with your actual credentials
+
+      const APP_ID = import.meta.env.VITE_RECLAIM_APP_ID;
+      const APP_SECRET = import.meta.env.VITE_RECLAIM_APP_SECRET;
+
+      const PROVIDER_ID = '6d3f6753-7ee6-49ee-a545-62f1b1822ae5';
+
+      // Check if device is mobile
+      const isMobile =
+        /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()) ||
+        (typeof window.orientation !== 'undefined' ? window.orientation : -1) > -1;
+
+      // Check if device is iOS
+      const isIOS = /mac|iphone|ipad|ipod/i.test(navigator.userAgent.toLowerCase()) || false;
+
+      // Determine device type
+      const deviceType = isMobile ? (isIOS ? 'ios' : 'android') : 'desktop';
+
+      // Initialize the Reclaim SDK with your credentials
+      const reclaimProofRequest = await ReclaimProofRequest.init(APP_ID, APP_SECRET, PROVIDER_ID, {
+        device: deviceType,
+        useAppClip: deviceType !== 'desktop',
+      });
+      // Generate the verification request URL
+      const requestUrl = await reclaimProofRequest.getRequestUrl();
+      console.log('Request URL:', requestUrl);
+      setRequestUrl(requestUrl);
+      setLoadingState({ type: 'none', step: 'none' });
+
+      // Start listening for proof submissions
+      await reclaimProofRequest.startSession({
+        // Called when the user successfully completes the verification
+        onSuccess: (proofs) => {
+          if (proofs) {
+            if (typeof proofs === 'string') {
+              // Parse the string into an object
+              const parsedProof = JSON.parse(proofs);
+              setProofs([parsedProof]);
+            } else if (typeof proofs !== 'string') {
+              if (Array.isArray(proofs)) {
+                console.log('Verification success', JSON.stringify(proofs.map((p) => p.claimData.context)));
+                setProofs(proofs);
+              } else {
+                console.log('Verification success', proofs?.claimData.context);
+                setProofs([proofs]);
+              }
+            }
+          }
+          // Reset loading state when proofs are received
+          setLoadingState({ type: 'none', step: 'none' });
+          // Add your success logic here, such as:
+          // - Updating UI to show verification success
+          // - Storing verification status
+          // - Redirecting to another page
+        },
+        // Called if there's an error during verification
+        onError: (error) => {
+          console.error('Verification failed', error);
+          setErrorMessage(error instanceof Error ? error.message.split(': ')[1] : 'An unknown error occurred');
+          setLoadingState({ type: 'none', step: 'none' });
+
+          // Add your error handling logic here, such as:
+          // - Showing error message to user
+          // - Resetting verification state
+          // - Offering retry options
+        },
+      });
+    } catch (error) {
+      console.error('Error generating verification request:', error);
+      setErrorMessage(error instanceof Error ? error.message.split(': ')[1] : 'An unknown error occurred');
+      setLoadingState({ type: 'none', step: 'none' });
+    }
+  };
+
+  console.log(errorMessage);
+
+  // Handle modal open to trigger verification request
+  const handleModalOpen = async (open: boolean) => {
+    setIsModalOpen(open);
+    if (open && !requestUrl) {
+      // Call getVerificationReq when modal opens and we don't have a URL yet
+      await getVerificationReq();
+    }
+  };
+
+  // Add a function to handle mobile verification
+  const handleMobileVerification = () => {
+    setLoadingState({ type: 'verification', step: 'waiting' });
+    window.open(requestUrl!, '_blank');
+  };
+
   const ukCode = `import { ReclaimClient } from '@reclaimprotocol/js-sdk';
   const handleVerification = async () => {
   
@@ -23,7 +146,23 @@ const App = () => {
    
 `;
 
+  // QR Code SVG component for better readability
+
   // extremely small, dependency-free highlighter for demo purposes
+
+  // Helper function to extract parameters from proof
+  const getExtractedParameters = (proof: any) => {
+    try {
+      if (proof?.claimData?.context) {
+        const context = JSON.parse(proof.claimData.context);
+        return context.extractedParameters || {};
+      }
+      return {};
+    } catch (error) {
+      console.error('Error parsing proof context:', error);
+      return {};
+    }
+  };
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -50,21 +189,18 @@ const App = () => {
               </a>
             </div>
             <div className="hidden lg:flex lg:items-center lg:gap-x-10">
-              <a
-                href="#features"
-                className="text-[15px] font-medium text-gray-600 hover:text-gray-900 transition-colors"
-              >
+              <a href="#features" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
                 Features
               </a>
               <a
                 href="#how-it-works"
-                className="text-[15px] font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
               >
                 How it Works
               </a>
               <a
                 href="#who-is-it-for"
-                className="text-[15px] font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Who is it For
               </a>
@@ -96,7 +232,7 @@ const App = () => {
                     <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
                       The Easiest Way to Verify Ages with Zero-Knowledge Privacy
                     </h1>
-                    <p className="text-lg text-gray-400 leading-relaxed">
+                    <p className="text-base text-gray-400 leading-relaxed">
                       Comply with global age verification regulations while protecting User Privacy
                     </p>
                   </div>
@@ -140,15 +276,15 @@ const App = () => {
                       <TabsList className="inline-flex w-full items-center justify-start bg-gray-800/50 p-1 rounded-lg gap-1 overflow-x-auto whitespace-nowrap">
                         <TabsTrigger
                           value="uk"
-                          className="rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
                         >
                           <span>🇬🇧 UK</span>
-                          <span className="text-[12px] text-emerald-400 ml-2">Live</span>
+                          <span className="text-sm text-emerald-400 ml-2">Live</span>
                         </TabsTrigger>
 
                         <TabsTrigger
                           value="us"
-                          className="rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
                         >
                           <span>🇺🇸 US</span>
                           {/* <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span> */}
@@ -156,7 +292,7 @@ const App = () => {
 
                         <TabsTrigger
                           value="eu"
-                          className="rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
                         >
                           <span>🇪🇺 EU</span>
                           {/* <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span> */}
@@ -167,12 +303,12 @@ const App = () => {
                         {/* Code Block */}
                         <div className="rounded-lg bg-gray-800/50 overflow-hidden">
                           <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
-                            <span className="text-[13px] text-gray-400">Integration Code</span>
+                            <span className="text-sm text-gray-400">Integration Code</span>
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => navigator.clipboard.writeText(ukCode)}
-                              className="text-gray-300 hover:text-white text-xs"
+                              className="text-gray-300 hover:text-white text-sm"
                             >
                               <Copy className="h-3 w-3 mr-1" />
                               <span>Copy</span>
@@ -182,7 +318,7 @@ const App = () => {
                             <Highlight theme={themes.vsDark} code={ukCode} language="ts">
                               {({ className, style, tokens, getLineProps, getTokenProps }) => (
                                 <pre
-                                  className={`${className} m-0 p-4 text-xs leading-relaxed`}
+                                  className={`${className} m-0 p-4 text-sm leading-relaxed`}
                                   style={{ ...style, background: 'transparent' }}
                                 >
                                   {tokens.map((line, i) => (
@@ -200,12 +336,306 @@ const App = () => {
 
                         {/* Action Buttons */}
                         <div className="flex space-x-3">
-                          <Button
-                            size="sm"
-                            className="bg-white text-gray-900 hover:bg-gray-50 px-4 py-2 text-[13px] font-medium rounded-lg shadow-sm hover:shadow transition-all"
-                          >
-                            Try Now
-                          </Button>
+                          <Dialog open={isModalOpen} onOpenChange={handleModalOpen}>
+                            <DialogTrigger asChild>
+                              <Button
+                                size="sm"
+                                className="bg-white text-gray-900 hover:bg-gray-50 px-4 py-2 text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all"
+                              >
+                                Try Now
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent
+                              className={`${
+                                proofs.length > 0
+                                  ? isMobile
+                                    ? 'w-full max-w-[95vw] h-[90vh] max-h-none'
+                                    : 'w-[1200px]'
+                                  : isMobile
+                                  ? 'w-full max-w-[95vw] h-[85vh] max-h-none'
+                                  : 'w-[896px]'
+                              } max-w-none p-0 gap-0 ${isMobile ? 'overflow-y-auto' : ''}`}
+                            >
+                              <div className={`${isMobile ? 'p-4' : 'p-8'}`}>
+                                <div className={`flex items-start justify-between ${isMobile ? 'mb-4' : 'mb-8'}`}>
+                                  <div className="flex items-center gap-4">
+                                    <div
+                                      className={`${
+                                        isMobile ? 'w-12 h-12' : 'w-16 h-16'
+                                      } rounded-xl overflow-hidden bg-white border border-gray-100 p-2 flex items-center justify-center`}
+                                    >
+                                      <img
+                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/2560px-National_Health_Service_%28England%29_logo.svg.png"
+                                        alt="NHS"
+                                        className="w-full h-full object-contain"
+                                      />
+                                    </div>
+                                    <div>
+                                      <h2
+                                        className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold text-gray-900`}
+                                      >
+                                        Prove your age with NHS
+                                      </h2>
+                                      <p className={`mt-1 ${isMobile ? 'text-sm' : 'text-base'} text-gray-500`}>
+                                        Prove your age in seconds. No screenshots. No uploads.
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div
+                                  className={`${isMobile ? 'flex flex-col gap-6' : 'flex gap-12'} ${
+                                    isMobile ? 'min-h-[300px]' : 'min-h-[400px]'
+                                  }`}
+                                >
+                                  {/* Left Side - Instructions */}
+                                  <div className={`${isMobile ? 'w-full order-2' : 'flex-1 w-1/2'} space-y-8`}>
+                                    <div>
+                                      <h3
+                                        className={`${isMobile ? 'text-base' : 'text-lg'} font-medium text-gray-900 ${
+                                          isMobile ? 'mb-4' : 'mb-6'
+                                        }`}
+                                      >
+                                        Follow these steps:
+                                      </h3>
+                                      <div className={`${isMobile ? 'space-y-4' : 'space-y-6'}`}>
+                                        {/* Update each step with mobile responsive styling */}
+                                        <div className="flex items-start gap-4">
+                                          <div
+                                            className={`flex-shrink-0 ${
+                                              isMobile ? 'w-8 h-8' : 'w-10 h-10'
+                                            } rounded-full bg-indigo-50 flex items-center justify-center`}
+                                          >
+                                            <Camera className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-indigo-600`} />
+                                          </div>
+                                          <div>
+                                            <p
+                                              className={`font-medium text-gray-900 ${
+                                                isMobile ? 'text-sm' : 'text-base'
+                                              }`}
+                                            >
+                                              {isMobile ? 'Tap Button' : 'Scan QR Code'}
+                                            </p>
+                                            <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-500 mt-1`}>
+                                              {isMobile
+                                                ? 'Tap the button to start verification'
+                                                : "Use your phone's camera to scan the QR code"}
+                                            </p>
+                                          </div>
+                                        </div>
+
+                                        <div className="flex items-start gap-4">
+                                          <div
+                                            className={`flex-shrink-0 ${
+                                              isMobile ? 'w-8 h-8' : 'w-10 h-10'
+                                            } rounded-full bg-indigo-50 flex items-center justify-center`}
+                                          >
+                                            <LogIn className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-indigo-600`} />
+                                          </div>
+                                          <div>
+                                            <p
+                                              className={`font-medium text-gray-900 ${
+                                                isMobile ? 'text-sm' : 'text-base'
+                                              }`}
+                                            >
+                                              Login to NHS
+                                            </p>
+                                            <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-500 mt-1`}>
+                                              Sign in to your account
+                                            </p>
+                                          </div>
+                                        </div>
+
+                                        <div className="flex items-start gap-4">
+                                          <div
+                                            className={`flex-shrink-0 ${
+                                              isMobile ? 'w-8 h-8' : 'w-10 h-10'
+                                            } rounded-full bg-indigo-50 flex items-center justify-center`}
+                                          >
+                                            <Clock className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-indigo-600`} />
+                                          </div>
+                                          <div>
+                                            <p
+                                              className={`font-medium text-gray-900 ${
+                                                isMobile ? 'text-sm' : 'text-base'
+                                              }`}
+                                            >
+                                              Wait for Verification
+                                            </p>
+                                            <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-500 mt-1`}>
+                                              We'll verify your age automatically
+                                            </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {/* Right Side - QR Code/Button and Loading */}
+                                  <div
+                                    className={`${
+                                      isMobile ? 'w-full order-1' : 'flex-1 w-1/2'
+                                    } flex flex-col items-center justify-center space-y-8`}
+                                  >
+                                    {/* QR Code/Button section with mobile responsive sizing */}
+                                    <div className="flex flex-col items-center">
+                                      {proofs.length > 0 ? null : ( // Hide QR code when proofs are received
+                                        <div className="bg-white p-4 rounded-xl shadow-sm">
+                                          {loadingState.type === 'provider' && loadingState.step === 'generating' ? (
+                                            // Show loading spinner while generating QR code
+                                            <div className="w-[200px] h-[200px] flex items-center justify-center">
+                                              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                                            </div>
+                                          ) : loadingState.type === 'verification' &&
+                                            loadingState.step === 'waiting' ? (
+                                            // Show loading spinner while waiting for verification
+                                            <div className="w-[200px] h-[200px] flex items-center justify-center">
+                                              <div className="flex flex-col items-center">
+                                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                                                <p className="mt-4 text-sm text-gray-500">
+                                                  Waiting for verification...
+                                                </p>
+                                              </div>
+                                            </div>
+                                          ) : requestUrl ? (
+                                            // Check if mobile device
+                                            /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+                                              navigator.userAgent.toLowerCase()
+                                            ) ? (
+                                              // Show button for mobile devices
+                                              <div className="w-[200px] h-[200px] flex items-center justify-center">
+                                                <Button
+                                                  onClick={handleMobileVerification}
+                                                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium"
+                                                >
+                                                  Open Verification
+                                                </Button>
+                                              </div>
+                                            ) : (
+                                              // Show QR code for desktop
+                                              <QRCode
+                                                size={200}
+                                                style={{ height: 'auto', maxWidth: '100%', width: '100%' }}
+                                                value={requestUrl}
+                                                viewBox={`0 0 200 200`}
+                                              />
+                                            )
+                                          ) : (
+                                            // Fallback placeholder
+                                            <div className="w-[200px] h-[200px] flex items-center justify-center bg-gray-100 rounded">
+                                              <span className="text-gray-400 text-sm">Generating QR...</span>
+                                            </div>
+                                          )}
+                                        </div>
+                                      )}
+
+                                      {proofs.length > 0 ? null : ( // Hide scan instruction when proofs are received
+                                        <p className="mt-4 text-sm text-gray-500">
+                                          {loadingState.type === 'verification' && loadingState.step === 'waiting'
+                                            ? 'Complete verification in the opened tab/app'
+                                            : /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+                                                navigator.userAgent.toLowerCase()
+                                              )
+                                            ? 'Tap the button to start verification'
+                                            : 'Scan the QR code to verify your credentials'}
+                                        </p>
+                                      )}
+
+                                      <div className="mt-6">
+                                        {proofs.length > 0 ? (
+                                          // Show extracted parameters when proofs are received
+                                          <div className="w-full">
+                                            <div className="text-center mb-4">
+                                              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                                <CheckCircle className="w-5 h-5 text-green-600" />
+                                              </div>
+                                              <h3
+                                                className={`${
+                                                  isMobile ? 'text-base' : 'text-lg'
+                                                } font-semibold text-gray-900`}
+                                              >
+                                                Verification Successful!
+                                              </h3>
+                                              <p className={`${isMobile ? 'text-sm' : 'text-base'} text-gray-500 mt-1`}>
+                                                Your credentials have been verified
+                                              </p>
+                                            </div>
+
+                                            {/* Display extracted parameters */}
+                                            <div
+                                              className={`bg-gray-50 rounded-lg p-4 ${
+                                                isMobile ? 'max-h-[200px]' : 'max-h-[300px]'
+                                              } overflow-y-auto`}
+                                            >
+                                              <h4
+                                                className={`${
+                                                  isMobile ? 'text-sm' : 'text-base'
+                                                } font-medium text-gray-900 mb-3`}
+                                              >
+                                                Verified Information:
+                                              </h4>
+                                              <div className="text-sm">
+                                                <JSONTree
+                                                  data={getExtractedParameters(proofs[0])}
+                                                  theme={{
+                                                    scheme: 'bright',
+                                                    author: 'chris kempson',
+                                                    base00: '#000000',
+                                                    base01: '#303030',
+                                                    base02: '#505050',
+                                                    base03: '#b0b0b0',
+                                                    base04: '#d0d0d0',
+                                                    base05: '#e0e0e0',
+                                                    base06: '#f5f5f5',
+                                                    base07: '#ffffff',
+                                                    base08: '#fb0120',
+                                                    base09: '#fc6d24',
+                                                    base0A: '#fda331',
+                                                    base0B: '#a1c659',
+                                                    base0C: '#76c7b7',
+                                                    base0D: '#6fb3d2',
+                                                    base0E: '#d381c3',
+                                                    base0F: '#be643c',
+                                                  }}
+                                                  invertTheme={false}
+                                                  hideRoot={true}
+                                                  shouldExpandNodeInitially={() => true}
+                                                  labelRenderer={([key]) => (
+                                                    <strong style={{ color: '#6fb3d2' }}>{key}:</strong>
+                                                  )}
+                                                  valueRenderer={(raw) => (
+                                                    <span
+                                                      style={{
+                                                        fontSize: isMobile ? '12px' : '14px',
+                                                        color: '#a1c659',
+                                                        fontWeight: 'bold',
+                                                      }}
+                                                    >
+                                                      {raw as string}
+                                                    </span>
+                                                  )}
+                                                />
+                                              </div>
+                                            </div>
+                                          </div>
+                                        ) : (
+                                          // Show loading state while waiting for proofs
+                                          <div>
+                                            <div className="animate-pulse flex space-x-2 justify-center">
+                                              <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
+                                              <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
+                                              <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
+                                            </div>
+                                            <p className="text-sm text-gray-500 mt-2">Waiting for proofs...</p>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
                         </div>
 
                         {/* Status */}
@@ -215,8 +645,8 @@ const App = () => {
                               <CheckCircle className="h-4 w-4 text-emerald-400" />
                             </div>
                             <div>
-                              <div className="text-[14px] font-medium text-white">Ready for UK Age Verification</div>
-                              <div className="text-[13px] text-gray-400">Compliant with latest regulations</div>
+                              <div className="text-sm font-medium text-white">Ready for UK Age Verification</div>
+                              <div className="text-sm text-gray-400">Compliant with latest regulations</div>
                             </div>
                           </div>
                         </div>
@@ -228,10 +658,10 @@ const App = () => {
                             <Rocket className="h-6 w-6 text-gray-400" />
                           </div>
                           <h3 className="text-lg font-medium text-white">Coming to United States</h3>
-                          <p className="text-[14px] text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
                           <Button
                             size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-[13px] font-medium rounded-lg"
+                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
                           >
                             Join Waitlist
                           </Button>
@@ -244,10 +674,10 @@ const App = () => {
                             <Rocket className="h-6 w-6 text-gray-400" />
                           </div>
                           <h3 className="text-lg font-medium text-white">Coming to Europe</h3>
-                          <p className="text-[14px] text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
                           <Button
                             size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-[13px] font-medium rounded-lg"
+                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
                           >
                             Join Waitlist
                           </Button>
@@ -351,7 +781,7 @@ const App = () => {
                       <CardContent className="pt-6">
                         <div className="grid grid-cols-3 gap-4">
                           <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                            <div className="text-xs text-gray-400">Accuracy</div>
+                            <div className="text-sm text-gray-400">Accuracy</div>
                             <div className="mt-2 text-2xl font-semibold text-emerald-400">100%</div>
                             <div className="mt-3 h-2 w-full rounded-full bg-white/10">
                               <div className="h-2 w-full rounded-full bg-emerald-400/80"></div>
@@ -359,7 +789,7 @@ const App = () => {
                           </div>
 
                           <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                            <div className="text-xs text-gray-400">Avg time</div>
+                            <div className="text-sm text-gray-400">Avg time</div>
                             <div className="mt-2 text-2xl font-semibold text-white">3-10s</div>
                             <div className="mt-3 h-2 w-full rounded-full bg-white/10">
                               <div className="h-2 w-full rounded-full bg-emerald-400/80"></div>
@@ -367,9 +797,9 @@ const App = () => {
                           </div>
 
                           <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                            <div className="text-xs text-gray-400">PII stored</div>
+                            <div className="text-sm text-gray-400">PII stored</div>
                             <div className="mt-2 text-2xl font-semibold text-white">0</div>
-                            <div className="mt-3 text-[11px] text-gray-400">Zero-knowledge proof</div>
+                            <div className="mt-3 text-sm text-gray-400">Zero-knowledge proof</div>
                           </div>
                         </div>
 
@@ -502,7 +932,7 @@ const App = () => {
                     Age Verification?
                   </span>
                 </h2>
-                <p className="mt-4 text-[15px] leading-relaxed text-gray-300">
+                <p className="mt-4 text-base leading-relaxed text-gray-300">
                   Join hundreds of companies already using Reclaim for privacy-preserving age verification.
                 </p>
                 <div className="mt-8 flex items-center justify-center gap-x-4">
@@ -511,7 +941,7 @@ const App = () => {
                       window.open('https://cal.com/reclaimprotocol/30min', '_blank');
                     }}
                     size="lg"
-                    className="bg-white text-gray-900 hover:bg-gray-50 px-6 py-2 text-[15px] font-medium rounded-lg shadow-sm hover:shadow transition-all"
+                    className="bg-white text-gray-900 hover:bg-gray-50 px-6 py-2 text-base font-medium rounded-lg shadow-sm hover:shadow transition-all"
                   >
                     Talk to Founder
                   </Button>
