@@ -7,19 +7,21 @@ import { Badge } from './components/ui/badge';
 
 const App = () => {
   const ukCode = `import { ReclaimClient } from '@reclaimprotocol/js-sdk';
-
-// Initialize Reclaim for UK age verification
-const reclaim = new ReclaimClient({
-  region: 'uk',
-  apiKey: 'YOUR_API_KEY'
+  const handleVerification = async () => {
+  
+  const reclaimProofRequest = await ReclaimProofRequest.init(APP_ID, APP_SECRET, PROVIDER_ID);
+  await reclaimProofRequest.triggerReclaimFlow();
+ 
+  await reclaimProofRequest.startSession({
+    onSuccess: (proofs) => {
+     console.log('Verification successful:', proofs);  
+    },
+    onError: (error) => {
+     console.error('Verification failed', error);
+    },
 });
-
-// Start verification
-const result = await reclaim.verifyAge({
-  minAge: 18,
-  onSuccess: (proof) => console.log('✅ Age verified!'),
-  onError: (error) => console.error('❌ Failed:', error)
-});`;
+   
+`;
 
   // extremely small, dependency-free highlighter for demo purposes
 
@@ -87,8 +89,9 @@ const result = await reclaim.verifyAge({
               <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
             </div>
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <div className="flex flex-col gap-20 lg:flex-row lg:items-center lg:gap-24">
-                <div className="flex-1 space-y-8">
+              <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:gap-16">
+                {/* Left Section - Text Content */}
+                <div className="w-full lg:w-1/2 space-y-8">
                   <div className="space-y-6">
                     <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
                       The Easiest Way to Verify Ages with Zero-Knowledge Privacy
@@ -129,7 +132,9 @@ const result = await reclaim.verifyAge({
                     </div>
                   </div>
                 </div>
-                <div className="flex-1">
+
+                {/* Right Section - Code Snippet */}
+                <div className="w-full lg:w-1/2">
                   <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8">
                     <Tabs defaultValue="uk" className="w-full">
                       <TabsList className="inline-flex w-full items-center justify-start bg-gray-800/50 p-1 rounded-lg gap-1 overflow-x-auto whitespace-nowrap">
@@ -137,7 +142,7 @@ const result = await reclaim.verifyAge({
                           value="uk"
                           className="rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
                         >
-                          <span>🇬🇧 United Kingdom</span>
+                          <span>🇬🇧 UK</span>
                           <span className="text-[12px] text-emerald-400 ml-2">Live</span>
                         </TabsTrigger>
 
@@ -145,16 +150,16 @@ const result = await reclaim.verifyAge({
                           value="us"
                           className="rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
                         >
-                          <span>🇺🇸 United States</span>
-                          <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span>
+                          <span>🇺🇸 US</span>
+                          {/* <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span> */}
                         </TabsTrigger>
 
                         <TabsTrigger
                           value="eu"
                           className="rounded-md px-3 py-1.5 text-[14px] font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
                         >
-                          <span>🇪🇺 Europe</span>
-                          <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span>
+                          <span>🇪🇺 EU</span>
+                          {/* <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span> */}
                         </TabsTrigger>
                       </TabsList>
 
