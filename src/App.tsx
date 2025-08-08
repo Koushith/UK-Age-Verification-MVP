@@ -18,7 +18,6 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
 import { NavBar } from './components/navbar/NavBar';
 import { HeroBenefits } from './components/hero/Hero';
-import { CodeBlock } from './components/hero/Hero';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './components/ui/card';
 import { Badge } from './components/ui/badge';
 import { Dialog, DialogContent, DialogTrigger } from './components/ui/dialog';
