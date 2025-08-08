@@ -140,18 +140,22 @@ const App = () => {
 
   const APP_ID='0x71A6f91E69BDf0042ba9154B0f2e2730836e088F'
   const APP_SECRET='0x253ced133dc64537df17e1a5fee94f374d5a4075adbad954c0fc5fc0e3a12211'
-  const PROVIDER_ID='47b3843c-e0a1-4462-8461-77d22ad768aa'
+
+  // 02394885-47b8-4a20-833d-0801ccccc9e4 (Wales NHS Age verification)
+  // checkout https://dev.reclaimprotocol.org/explore for more providers
+  const PROVIDER_ID='47b3843c-e0a1-4462-8461-77d22ad768aa' //(Eng NHS provider ID)
   
   const reclaimProofRequest = await ReclaimProofRequest.init(APP_ID, APP_SECRET, PROVIDER_ID);
   await reclaimProofRequest.triggerReclaimFlow();
  
   await reclaimProofRequest.startSession({
-    onSuccess: (proofs) => {
-     console.log('Verification successful:', proofs);  
-    },
-    onError: (error) => {
-     console.error('Verification failed', error);
-    },
+        onSuccess: (proofs) => {
+         console.log('Verification successful:', proofs);  
+        },
+        onError: (error) => {
+            console.error('Verification failed', error);
+        },
+     
   });
 }  
 `;
