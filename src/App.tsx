@@ -13,6 +13,7 @@ import {
   Camera,
   LogIn,
   Clock,
+  ChevronDown,
 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
 import { NavBar } from './components/navbar/NavBar';
@@ -21,6 +22,12 @@ import { CodeBlock } from './components/hero/Hero';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './components/ui/card';
 import { Badge } from './components/ui/badge';
 import { Dialog, DialogContent, DialogTrigger } from './components/ui/dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './components/ui/dropdown-menu';
 import { useState } from 'react';
 import { ReclaimProofRequest } from '@reclaimprotocol/js-sdk';
 import { JSONTree } from 'react-json-tree';
@@ -29,6 +36,7 @@ import { useIsMobile } from './hooks/use-mobile';
 import { ComingSoonTab, IndustryCard } from './components/coming-soon/ComingSoon';
 import { Footer } from './components/footer/footer';
 import { HowItWorksStep } from './components/how-it-works/HowItWorks';
+import { Highlight } from 'prism-react-renderer';
 
 // Header Component
 
@@ -251,6 +259,7 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useIsMobile();
+  const [selectedUKRegion, setSelectedUKRegion] = useState('UK');
 
   const getVerificationReq = async () => {
     setLoadingState({ type: 'provider', step: 'generating' });
@@ -462,7 +471,211 @@ const App = () => {
                       </TabsList>
 
                       <TabsContent value="uk" className="mt-6 space-y-6 min-h-[380px]">
-                        <CodeBlock code={ukCode} />
+                        <div
+                          className="rounded-lg overflow-hidden shadow-lg"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+                        >
+                          <div className="flex items-center justify-between px-4 py-2 border-b border-white/20">
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm text-white/90 font-medium">Integration Code</span>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="flex items-center gap-1 px-3 py-1 rounded hover:bg-white/10 transition-colors text-xs text-white/80 border border-white/20">
+                                    <span>{selectedUKRegion}</span>
+                                    <ChevronDown className="w-3 h-3" />
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent
+                                  align="start"
+                                  className="min-w-[160px] bg-white border border-gray-200 shadow-lg"
+                                >
+                                  <DropdownMenuItem
+                                    onClick={() => setSelectedUKRegion('UK England')}
+                                    className="cursor-pointer"
+                                  >
+                                    <span>🏴󠁧󠁢󠁥󠁮󠁧󠁿 UK England</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() => setSelectedUKRegion('UK Wales')}
+                                    className="cursor-pointer"
+                                  >
+                                    <span>🏴󠁧󠁢󠁷󠁬󠁳󠁿 UK Wales</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() => setSelectedUKRegion('UK North Ireland')}
+                                    className="cursor-pointer"
+                                  >
+                                    <span>🇮🇪 UK North Ireland</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem
+                                    onClick={() => setSelectedUKRegion('UK Scotland')}
+                                    className="cursor-pointer"
+                                  >
+                                    <span>🏴󠁧󠁢󠁳󠁣󠁴󠁿 UK Scotland</span>
+                                  </DropdownMenuItem>
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => navigator.clipboard.writeText(ukCode)}
+                              className="text-white/80 hover:text-white hover:bg-white/20 text-sm"
+                            >
+                              <Copy className="h-3 w-3 mr-1" />
+                              <span>Copy</span>
+                            </Button>
+                          </div>
+                          <div
+                            className="overflow-x-auto overflow-y-hidden"
+                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+                          >
+                            <Highlight
+                              theme={{
+                                plain: {
+                                  color: '#f8f8f2',
+                                  backgroundColor: 'transparent',
+                                },
+                                styles: [
+                                  {
+                                    types: ['comment', 'prolog', 'doctype', 'cdata'],
+                                    style: {
+                                      color: '#6272a4',
+                                      fontStyle: 'italic',
+                                    },
+                                  },
+                                  {
+                                    types: ['namespace'],
+                                    style: {
+                                      opacity: 0.7,
+                                    },
+                                  },
+                                  {
+                                    types: ['tag', 'operator', 'number'],
+                                    style: {
+                                      color: '#ff79c6',
+                                      fontWeight: 'bold',
+                                    },
+                                  },
+                                  {
+                                    types: ['property', 'function'],
+                                    style: {
+                                      color: '#50fa7b',
+                                      fontWeight: '600',
+                                    },
+                                  },
+                                  {
+                                    types: ['tag-id', 'selector', 'atrule-id'],
+                                    style: {
+                                      color: '#f1fa8c',
+                                    },
+                                  },
+                                  {
+                                    types: ['attr-name'],
+                                    style: {
+                                      color: '#50fa7b',
+                                    },
+                                  },
+                                  {
+                                    types: [
+                                      'boolean',
+                                      'string',
+                                      'entity',
+                                      'url',
+                                      'attr-value',
+                                      'keyword',
+                                      'control',
+                                      'directive',
+                                      'unit',
+                                      'statement',
+                                      'regex',
+                                      'at-rule',
+                                    ],
+                                    style: {
+                                      color: '#f1fa8c',
+                                      fontWeight: '500',
+                                    },
+                                  },
+                                  {
+                                    types: ['variable', 'const', 'class', 'function'],
+                                    style: {
+                                      color: '#8be9fd',
+                                      fontWeight: '600',
+                                    },
+                                  },
+                                  {
+                                    types: ['punctuation'],
+                                    style: {
+                                      color: '#f8f8f2',
+                                    },
+                                  },
+                                  {
+                                    types: ['selector', 'class-name'],
+                                    style: {
+                                      color: '#8be9fd',
+                                      fontWeight: 'bold',
+                                    },
+                                  },
+                                  {
+                                    types: ['important'],
+                                    style: {
+                                      color: '#ff5555',
+                                      fontWeight: 'bold',
+                                    },
+                                  },
+                                  {
+                                    types: ['support', 'builtin'],
+                                    style: {
+                                      color: '#ff79c6',
+                                    },
+                                  },
+                                  {
+                                    types: ['char'],
+                                    style: {
+                                      color: '#ff5555',
+                                    },
+                                  },
+                                ],
+                              }}
+                              code={ukCode}
+                              language="typescript"
+                            >
+                              {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                                <pre
+                                  className={`${className} m-0 p-6 text-sm leading-relaxed font-mono min-w-fit`}
+                                  style={{
+                                    ...style,
+                                    background: 'transparent',
+                                    whiteSpace: 'pre',
+                                    wordWrap: 'normal',
+                                    overflowWrap: 'normal',
+                                  }}
+                                >
+                                  {tokens.map((line, i) => (
+                                    <div key={i} {...getLineProps({ line })} className="relative whitespace-nowrap">
+                                      <span className="inline-block w-8 text-right mr-4 text-white/40 select-none text-xs flex-shrink-0">
+                                        {i + 1}
+                                      </span>
+                                      {line.map((token, key) => {
+                                        const props = getTokenProps({ token });
+                                        return (
+                                          <span
+                                            key={key}
+                                            {...props}
+                                            style={{
+                                              ...props.style,
+                                              textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                                            }}
+                                          />
+                                        );
+                                      })}
+                                    </div>
+                                  ))}
+                                </pre>
+                              )}
+                            </Highlight>
+                          </div>
+                        </div>
 
                         <div className="flex space-x-3">
                           <Dialog open={isModalOpen} onOpenChange={handleModalOpen}>
