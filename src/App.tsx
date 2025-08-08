@@ -262,7 +262,7 @@ const App = () => {
                 <div className="w-full lg:w-1/2 space-y-8">
                   <div className="space-y-6">
                     <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                      The BEST AGE VERIFICATION solution in the market today
+                      THE BEST AGE VERIFICATION solution in the market today
                     </h1>
                     <p className="text-base text-white/90 leading-relaxed">
                       Comply with global age verification regulations while protecting User Privacy
