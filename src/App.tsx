@@ -14,6 +14,11 @@ import {
   Camera,
   LogIn,
   Clock,
+  Heart,
+  DollarSign,
+  Timer,
+  Database,
+  ShieldCheck,
 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
 import { Highlight, themes } from 'prism-react-renderer';
@@ -132,6 +137,10 @@ const App = () => {
   const ukCode = `import { ReclaimClient } from '@reclaimprotocol/js-sdk';
   
   const handleVerification = async () => {
+
+  const APP_ID='0x71A6f91E69BDf0042ba9154B0f2e2730836e088F'
+  const APP_SECRET='0x253ced133dc64537df17e1a5fee94f374d5a4075adbad954c0fc5fc0e3a12211'
+  const PROVIDER_ID='47b3843c-e0a1-4462-8461-77d22ad768aa'
   
   const reclaimProofRequest = await ReclaimProofRequest.init(APP_ID, APP_SECRET, PROVIDER_ID);
   await reclaimProofRequest.triggerReclaimFlow();
@@ -231,7 +240,7 @@ const App = () => {
                 <div className="w-full lg:w-1/2 space-y-8">
                   <div className="space-y-6">
                     <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                      The Easiest Way to Verify Ages with Zero-Knowledge Privacy
+                      The BEST Age Verification solution in the Market
                     </h1>
                     <p className="text-base text-gray-400 leading-relaxed">
                       Comply with global age verification regulations while protecting User Privacy
@@ -245,27 +254,39 @@ const App = () => {
                       className="bg-white text-gray-900 hover:bg-gray-200 font-medium transition-colors group cursor-pointer"
                     >
                       <Rocket className="mr-2 h-4 w-4" />
-                      Book a Demo
+                      Book Demo
                     </Button>
                   </div>
                   <div className="mt-16 flex flex-wrap items-center gap-4">
                     <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
                       <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
-                        <Shield className="h-4 w-4" />
+                        <Heart className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">Privacy preserving</span>
+                      <span className="text-sm font-medium text-gray-100">PII data censored → Happy Customers</span>
                     </div>
                     <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
                       <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
-                        <Globe className="h-4 w-4" />
+                        <DollarSign className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">Global Compliant</span>
+                      <span className="text-sm font-medium text-gray-100">Cheapest solution in the market</span>
                     </div>
                     <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
                       <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
-                        <Zap className="h-4 w-4" />
+                        <Timer className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">Instant verification</span>
+                      <span className="text-sm font-medium text-gray-100">5 mins to Integrate</span>
+                    </div>
+                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
+                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                        <Database className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-medium text-gray-100">Reliable Govt. Sources</span>
+                    </div>
+                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
+                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                        <ShieldCheck className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-medium text-gray-100">Compliant Verification</span>
                     </div>
                   </div>
                 </div>
@@ -281,6 +302,13 @@ const App = () => {
                         >
                           <span>🇬🇧 UK</span>
                           <span className="text-sm text-emerald-400 ml-2">Live</span>
+                        </TabsTrigger>
+
+                        <TabsTrigger
+                          value="aus"
+                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                        >
+                          <span>🇦🇺 AUS</span>
                         </TabsTrigger>
 
                         <TabsTrigger
@@ -375,7 +403,7 @@ const App = () => {
                                       <h2
                                         className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold text-gray-900`}
                                       >
-                                        Prove your age with NHS
+                                        Prove your age with UK NHS Age Verification
                                       </h2>
                                       <p className={`mt-1 ${isMobile ? 'text-sm' : 'text-base'} text-gray-500`}>
                                         Prove your age in seconds. No screenshots. No uploads.
@@ -405,9 +433,9 @@ const App = () => {
                                           <div
                                             className={`flex-shrink-0 ${
                                               isMobile ? 'w-8 h-8' : 'w-10 h-10'
-                                            } rounded-full bg-indigo-50 flex items-center justify-center`}
+                                            } rounded-full bg-primary/10 flex items-center justify-center`}
                                           >
-                                            <Camera className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-indigo-600`} />
+                                            <Camera className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-primary`} />
                                           </div>
                                           <div>
                                             <p
@@ -429,9 +457,9 @@ const App = () => {
                                           <div
                                             className={`flex-shrink-0 ${
                                               isMobile ? 'w-8 h-8' : 'w-10 h-10'
-                                            } rounded-full bg-indigo-50 flex items-center justify-center`}
+                                            } rounded-full bg-primary/10 flex items-center justify-center`}
                                           >
-                                            <LogIn className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-indigo-600`} />
+                                            <LogIn className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-primary`} />
                                           </div>
                                           <div>
                                             <p
@@ -451,9 +479,9 @@ const App = () => {
                                           <div
                                             className={`flex-shrink-0 ${
                                               isMobile ? 'w-8 h-8' : 'w-10 h-10'
-                                            } rounded-full bg-indigo-50 flex items-center justify-center`}
+                                            } rounded-full bg-primary/10 flex items-center justify-center`}
                                           >
-                                            <Clock className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-indigo-600`} />
+                                            <Clock className={`${isMobile ? 'w-4 h-4' : 'w-5 h-5'} text-primary`} />
                                           </div>
                                           <div>
                                             <p
@@ -485,14 +513,14 @@ const App = () => {
                                           {loadingState.type === 'provider' && loadingState.step === 'generating' ? (
                                             // Show loading spinner while generating QR code
                                             <div className="w-[200px] h-[200px] flex items-center justify-center">
-                                              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                                              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                                             </div>
                                           ) : loadingState.type === 'verification' &&
                                             loadingState.step === 'waiting' ? (
                                             // Show loading spinner while waiting for verification
                                             <div className="w-[200px] h-[200px] flex items-center justify-center">
                                               <div className="flex flex-col items-center">
-                                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+                                                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
                                                 <p className="mt-4 text-sm text-gray-500">
                                                   Waiting for verification...
                                                 </p>
@@ -507,7 +535,7 @@ const App = () => {
                                               <div className="w-[200px] h-[200px] flex items-center justify-center">
                                                 <Button
                                                   onClick={handleMobileVerification}
-                                                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-medium"
+                                                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-lg font-medium"
                                                 >
                                                   Open Verification
                                                 </Button>
@@ -623,9 +651,9 @@ const App = () => {
                                           // Show loading state while waiting for proofs
                                           <div>
                                             <div className="animate-pulse flex space-x-2 justify-center">
-                                              <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
-                                              <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
-                                              <div className="h-2 w-2 bg-indigo-600 rounded-full"></div>
+                                              <div className="h-2 w-2 bg-primary rounded-full"></div>
+                                              <div className="h-2 w-2 bg-primary rounded-full"></div>
+                                              <div className="h-2 w-2 bg-primary rounded-full"></div>
                                             </div>
                                             <p className="text-sm text-gray-500 mt-2">Waiting for proofs...</p>
                                           </div>
@@ -653,12 +681,66 @@ const App = () => {
                         </div>
                       </TabsContent>
 
+                      <TabsContent value="aus" className="mt-6 min-h-[380px]">
+                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
+                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-gray-400" />
+                          </div>
+                          <h3 className="text-lg font-medium text-white">Coming to Australia</h3>
+                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <Button
+                            onClick={() => {
+                              window.open('https://form.typeform.com/to/JOCh5web', '_blank');
+                            }}
+                            size="sm"
+                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
+                          >
+                            Join Waitlist
+                          </Button>
+                        </div>
+                      </TabsContent>
+
                       <TabsContent value="us" className="mt-6 min-h-[380px]">
                         <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
                           <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
                             <Rocket className="h-6 w-6 text-gray-400" />
                           </div>
                           <h3 className="text-lg font-medium text-white">Coming to United States</h3>
+                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <Button
+                            onClick={() => {
+                              window.open('https://form.typeform.com/to/JOCh5web', '_blank');
+                            }}
+                            size="sm"
+                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
+                          >
+                            Join Waitlist
+                          </Button>
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="eu" className="mt-6 min-h-[380px]">
+                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
+                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-gray-400" />
+                          </div>
+                          <h3 className="text-lg font-medium text-white">Coming to Europe</h3>
+                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <Button
+                            size="sm"
+                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
+                          >
+                            Join Waitlist
+                          </Button>
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="eu" className="mt-6 min-h-[380px]">
+                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
+                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-gray-400" />
+                          </div>
+                          <h3 className="text-lg font-medium text-white">Coming to Europe</h3>
                           <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
                           <Button
                             size="sm"
@@ -939,10 +1021,10 @@ const App = () => {
                 <div className="mt-8 flex items-center justify-center gap-x-4">
                   <Button
                     onClick={() => {
-                      window.open('https://cal.com/reclaimprotocol/30min', '_blank');
+                      window.open('https://app.reclaim.ai/m/subhash/clients', '_blank');
                     }}
                     size="lg"
-                    className="bg-white text-gray-900 hover:bg-gray-50 px-6 py-2 text-base font-medium rounded-lg shadow-sm hover:shadow transition-all"
+                    className="bg-white text-gray-900 cursor-pointer hover:bg-gray-50 px-6 py-2 text-base font-medium rounded-lg shadow-sm hover:shadow transition-all"
                   >
                     Talk to Founder
                   </Button>
