@@ -177,46 +177,65 @@ const App = () => {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
-      <header className="fixed inset-x-0 top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-gray-100">
-        <nav className="mx-auto max-w-7xl px-6 h-20">
+      <header className="fixed bg-white text-black inset-x-0 top-0 z-50 backdrop-blur-lg border-b shadow-lg">
+        <nav className="mx-auto max-w-[1600px] px-6 h-20">
           <div className="flex items-center justify-between h-full">
-            <div className="flex items-center gap-2">
-              <a href="/">
-                <div className="flex items-center gap-2">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="text-gray-900"
-                  >
-                    <path d="M16 2L2 16L16 30L30 16L16 2Z" stroke="currentColor" strokeWidth="2"></path>
-                    <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="currentColor"></path>
-                  </svg>
-                  <span className="text-xl font-bold text-gray-900">Reclaim Age Verification</span>
+            <div className="flex items-center gap-3">
+              <a href="/" className="group">
+                <div className="flex items-center gap-3 transition-transform group-hover:scale-105">
+                  <div className="relative">
+                    <svg
+                      width="36"
+                      height="36"
+                      viewBox="0 0 32 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="text-black drop-shadow-lg"
+                    >
+                      <path d="M16 2L2 16L16 30L30 16L16 2Z" stroke="currentColor" strokeWidth="2.5"></path>
+                      <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="currentColor"></path>
+                    </svg>
+                    <div className="absolute inset-0 bg-white/20 rounded-lg blur-xl -z-10"></div>
+                  </div>
+                  <div>
+                    <span className="text-xl font-bold text-black drop-shadow-sm">Reclaim</span>
+                    <div className="text-sm text-black/80 font-medium -mt-1">Age Verification</div>
+                  </div>
                 </div>
               </a>
             </div>
-            <div className="hidden lg:flex lg:items-center lg:gap-x-10">
-              <a href="#features" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+
+            <div className="hidden lg:flex lg:items-center lg:gap-x-8">
+              <a
+                href="#features"
+                className="relative text-sm font-medium text-gray-900 hover:text-white transition-all duration-200 group py-2"
+              >
                 Features
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white rounded-full transition-all duration-200 group-hover:w-full"></span>
               </a>
               <a
                 href="#how-it-works"
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="relative text-sm font-medium text-gray-900 hover:text-white transition-all duration-200 group py-2"
               >
                 How it Works
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white rounded-full transition-all duration-200 group-hover:w-full"></span>
               </a>
               <a
                 href="#who-is-it-for"
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+                className="relative text-sm font-medium text-gray-900 hover:text-white transition-all duration-200 group py-2"
               >
-                Who is it For
+                Who is it For?
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-white rounded-full transition-all duration-200 group-hover:w-full"></span>
               </a>
+              <div className="h-6 w-px bg-white/20"></div>
             </div>
+
             <div className="lg:hidden">
-              <Button variant="ghost" size="sm" className="text-gray-700 hover:text-gray-900">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white/90 hover:text-white hover:bg-white/20 rounded-lg border border-white/20 backdrop-blur-sm"
+              >
                 <Menu className="h-5 w-5" />
               </Button>
             </div>
@@ -228,21 +247,24 @@ const App = () => {
       <main className="flex-1">
         <div className="h-full overflow-x-hidden font-sans antialiased">
           {/* Hero Section */}
-          <section className="relative overflow-hidden bg-gray-950 pt-40 pb-32 sm:pt-48 sm:pb-40">
+          <section
+            className="relative overflow-hidden pt-40 pb-32 sm:pt-48 sm:pb-40"
+            style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+          >
             <div className="absolute inset-0 -z-10 overflow-hidden">
-              <div className="absolute h-full w-full bg-[radial-gradient(circle_at_top_right,theme(colors.gray.800/0.15),transparent_50%)]"></div>
-              <div className="absolute h-full w-full bg-[radial-gradient(circle_at_40%_60%,theme(colors.gray.700/0.1),transparent_30%)]"></div>
-              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+              <div className="absolute h-full w-full bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_50%)]"></div>
+              <div className="absolute h-full w-full bg-[radial-gradient(circle_at_40%_60%,rgba(255,255,255,0.1),transparent_30%)]"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
             </div>
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
               <div className="flex flex-col gap-16 lg:flex-row lg:items-center lg:gap-16">
                 {/* Left Section - Text Content */}
                 <div className="w-full lg:w-1/2 space-y-8">
                   <div className="space-y-6">
                     <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-                      The BEST Age Verification solution in the Market
+                      The BEST Age Verification solution in the market
                     </h1>
-                    <p className="text-base text-gray-400 leading-relaxed">
+                    <p className="text-base text-white/90 leading-relaxed">
                       Comply with global age verification regulations while protecting User Privacy
                     </p>
                   </div>
@@ -251,110 +273,281 @@ const App = () => {
                       onClick={() => {
                         window.open('https://app.reclaim.ai/m/subhash/clients', '_blank');
                       }}
-                      className="bg-white text-gray-900 hover:bg-gray-200 font-medium transition-colors group cursor-pointer"
+                      className="bg-white text-gray-900 hover:bg-gray-100 font-medium transition-colors group cursor-pointer shadow-lg"
                     >
                       <Rocket className="mr-2 h-4 w-4" />
                       Book Demo
                     </Button>
                   </div>
                   <div className="mt-16 flex flex-wrap items-center gap-4">
-                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
-                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                    <div className="group flex items-center gap-3 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2 ring-1 ring-white/30 transition-all hover:ring-white/50 hover:bg-white/30">
+                      <span
+                        className="rounded-full p-1.5 text-white ring-1 ring-white/30 group-hover:text-white"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                      >
                         <Heart className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">PII data censored → Happy Customers</span>
+                      <span className="text-sm font-medium text-white">PII data censored → Happy Customers</span>
                     </div>
-                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
-                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                    <div className="group flex items-center gap-3 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2 ring-1 ring-white/30 transition-all hover:ring-white/50 hover:bg-white/30">
+                      <span
+                        className="rounded-full p-1.5 text-white ring-1 ring-white/30 group-hover:text-white"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                      >
                         <DollarSign className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">Cheapest solution in the market</span>
+                      <span className="text-sm font-medium text-white">Cheapest solution in the market</span>
                     </div>
-                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
-                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                    <div className="group flex items-center gap-3 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2 ring-1 ring-white/30 transition-all hover:ring-white/50 hover:bg-white/30">
+                      <span
+                        className="rounded-full p-1.5 text-white ring-1 ring-white/30 group-hover:text-white"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                      >
                         <Timer className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">5 mins to Integrate</span>
+                      <span className="text-sm font-medium text-white">5 mins to Integrate</span>
                     </div>
-                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
-                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                    <div className="group flex items-center gap-3 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2 ring-1 ring-white/30 transition-all hover:ring-white/50 hover:bg-white/30">
+                      <span
+                        className="rounded-full p-1.5 text-white ring-1 ring-white/30 group-hover:text-white"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                      >
                         <Database className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">Reliable Govt. Sources</span>
+                      <span className="text-sm font-medium text-white">Reliable Govt. Sources</span>
                     </div>
-                    <div className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-gray-800/80 to-gray-700/50 px-5 py-2 ring-1 ring-gray-700 transition-all hover:ring-gray-500">
-                      <span className="rounded-full bg-gray-800 p-1.5 text-white ring-1 ring-gray-700 group-hover:text-white">
+                    <div className="group flex items-center gap-3 rounded-full bg-white/20 backdrop-blur-sm px-5 py-2 ring-1 ring-white/30 transition-all hover:ring-white/50 hover:bg-white/30">
+                      <span
+                        className="rounded-full p-1.5 text-white ring-1 ring-white/30 group-hover:text-white"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+                      >
                         <ShieldCheck className="h-4 w-4" />
                       </span>
-                      <span className="text-sm font-medium text-gray-100">Compliant Verification</span>
+                      <span className="text-sm font-medium text-white">Compliant Verification</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Right Section - Code Snippet */}
                 <div className="w-full lg:w-1/2">
-                  <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8">
+                  <div
+                    className="rounded-2xl border border-white/30 p-8 backdrop-blur-sm shadow-2xl"
+                    style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                  >
                     <Tabs defaultValue="uk" className="w-full">
-                      <TabsList className="inline-flex w-full items-center justify-start bg-gray-800/50 p-1 rounded-lg gap-1 overflow-x-auto whitespace-nowrap">
+                      <TabsList
+                        className="inline-flex w-full items-center justify-start p-2 rounded-lg gap-2 overflow-x-auto whitespace-nowrap backdrop-blur-sm"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                      >
                         <TabsTrigger
                           value="uk"
-                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 
+                                   text-white/90 hover:text-white 
+                                   data-[state=active]:text-white data-[state=active]:bg-white/25 
+                                   data-[state=active]:border-white/40 data-[state=active]:shadow-lg
+                                   hover:bg-white/15 border border-transparent"
                         >
                           <span>🇬🇧 UK</span>
-                          <span className="text-sm text-emerald-400 ml-2">Live</span>
+                          <span className="text-xs text-emerald-300 ml-2 font-semibold bg-emerald-500/30 px-2 py-0.5 rounded-full">
+                            Live
+                          </span>
                         </TabsTrigger>
 
                         <TabsTrigger
                           value="aus"
-                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 
+                                   text-white/75 hover:text-white/90 
+                                   data-[state=active]:text-white data-[state=active]:bg-white/25 
+                                   data-[state=active]:border-white/40 data-[state=active]:shadow-lg
+                                   hover:bg-white/10 border border-transparent"
                         >
                           <span>🇦🇺 AUS</span>
                         </TabsTrigger>
 
                         <TabsTrigger
                           value="us"
-                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 
+                                   text-white/75 hover:text-white/90 
+                                   data-[state=active]:text-white data-[state=active]:bg-white/25 
+                                   data-[state=active]:border-white/40 data-[state=active]:shadow-lg
+                                   hover:bg-white/10 border border-transparent"
                         >
                           <span>🇺🇸 US</span>
-                          {/* <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span> */}
                         </TabsTrigger>
 
                         <TabsTrigger
                           value="eu"
-                          className="rounded-md px-3 py-1.5 text-sm font-medium transition-colors text-gray-400 hover:text-white data-[state=active]:bg-gray-800 data-[state=active]:text-white"
+                          className="relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 
+                                   text-white/75 hover:text-white/90 
+                                   data-[state=active]:text-white data-[state=active]:bg-white/25 
+                                   data-[state=active]:border-white/40 data-[state=active]:shadow-lg
+                                   hover:bg-white/10 border border-transparent"
                         >
                           <span>🇪🇺 EU</span>
-                          {/* <span className="text-[12px] text-gray-500 ml-2">Coming Soon</span> */}
                         </TabsTrigger>
                       </TabsList>
 
                       <TabsContent value="uk" className="mt-6 space-y-6 min-h-[380px]">
                         {/* Code Block */}
-                        <div className="rounded-lg bg-gray-800/50 overflow-hidden">
-                          <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
-                            <span className="text-sm text-gray-400">Integration Code</span>
+                        <div
+                          className="rounded-lg overflow-hidden shadow-lg"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+                        >
+                          <div className="flex items-center justify-between px-4 py-2 border-b border-white/20">
+                            <span className="text-sm text-white/90 font-medium">Integration Code</span>
                             <Button
                               variant="ghost"
                               size="sm"
                               onClick={() => navigator.clipboard.writeText(ukCode)}
-                              className="text-gray-300 hover:text-white text-sm"
+                              className="text-white/80 hover:text-white hover:bg-white/20 text-sm"
                             >
                               <Copy className="h-3 w-3 mr-1" />
                               <span>Copy</span>
                             </Button>
                           </div>
-                          <div className="p-0 bg-gray-900/50">
-                            <Highlight theme={themes.vsDark} code={ukCode} language="ts">
+                          <div
+                            className="overflow-x-auto overflow-y-hidden"
+                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
+                          >
+                            <Highlight
+                              theme={{
+                                plain: {
+                                  color: '#f8f8f2',
+                                  backgroundColor: 'transparent',
+                                },
+                                styles: [
+                                  {
+                                    types: ['comment', 'prolog', 'doctype', 'cdata'],
+                                    style: {
+                                      color: '#6272a4',
+                                      fontStyle: 'italic',
+                                    },
+                                  },
+                                  {
+                                    types: ['namespace'],
+                                    style: {
+                                      opacity: 0.7,
+                                    },
+                                  },
+                                  {
+                                    types: ['tag', 'operator', 'number'],
+                                    style: {
+                                      color: '#ff79c6',
+                                      fontWeight: 'bold',
+                                    },
+                                  },
+                                  {
+                                    types: ['property', 'function'],
+                                    style: {
+                                      color: '#50fa7b',
+                                      fontWeight: '600',
+                                    },
+                                  },
+                                  {
+                                    types: ['tag-id', 'selector', 'atrule-id'],
+                                    style: {
+                                      color: '#f1fa8c',
+                                    },
+                                  },
+                                  {
+                                    types: ['attr-name'],
+                                    style: {
+                                      color: '#50fa7b',
+                                    },
+                                  },
+                                  {
+                                    types: [
+                                      'boolean',
+                                      'string',
+                                      'entity',
+                                      'url',
+                                      'attr-value',
+                                      'keyword',
+                                      'control',
+                                      'directive',
+                                      'unit',
+                                      'statement',
+                                      'regex',
+                                      'at-rule',
+                                    ],
+                                    style: {
+                                      color: '#f1fa8c',
+                                      fontWeight: '500',
+                                    },
+                                  },
+                                  {
+                                    types: ['variable', 'const', 'class', 'function'],
+                                    style: {
+                                      color: '#8be9fd',
+                                      fontWeight: '600',
+                                    },
+                                  },
+                                  {
+                                    types: ['punctuation'],
+                                    style: {
+                                      color: '#f8f8f2',
+                                    },
+                                  },
+                                  {
+                                    types: ['selector', 'class-name'],
+                                    style: {
+                                      color: '#8be9fd',
+                                      fontWeight: 'bold',
+                                    },
+                                  },
+                                  {
+                                    types: ['important'],
+                                    style: {
+                                      color: '#ff5555',
+                                      fontWeight: 'bold',
+                                    },
+                                  },
+                                  {
+                                    types: ['support', 'builtin'],
+                                    style: {
+                                      color: '#ff79c6',
+                                    },
+                                  },
+                                  {
+                                    types: ['char'],
+                                    style: {
+                                      color: '#ff5555',
+                                    },
+                                  },
+                                ],
+                              }}
+                              code={ukCode}
+                              language="typescript"
+                            >
                               {({ className, style, tokens, getLineProps, getTokenProps }) => (
                                 <pre
-                                  className={`${className} m-0 p-4 text-sm leading-relaxed`}
-                                  style={{ ...style, background: 'transparent' }}
+                                  className={`${className} m-0 p-6 text-sm leading-relaxed font-mono min-w-fit`}
+                                  style={{
+                                    ...style,
+                                    background: 'transparent',
+                                    whiteSpace: 'pre',
+                                    wordWrap: 'normal',
+                                    overflowWrap: 'normal',
+                                  }}
                                 >
                                   {tokens.map((line, i) => (
-                                    <div key={i} {...getLineProps({ line })}>
-                                      {line.map((token, key) => (
-                                        <span key={key} {...getTokenProps({ token })} />
-                                      ))}
+                                    <div key={i} {...getLineProps({ line })} className="relative whitespace-nowrap">
+                                      <span className="inline-block w-8 text-right mr-4 text-white/40 select-none text-xs flex-shrink-0">
+                                        {i + 1}
+                                      </span>
+                                      {line.map((token, key) => {
+                                        const props = getTokenProps({ token });
+                                        return (
+                                          <span
+                                            key={key}
+                                            {...props}
+                                            style={{
+                                              ...props.style,
+                                              textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                                            }}
+                                          />
+                                        );
+                                      })}
                                     </div>
                                   ))}
                                 </pre>
@@ -668,32 +861,38 @@ const App = () => {
                         </div>
 
                         {/* Status */}
-                        <div className="rounded-lg bg-gray-800/50 p-4">
+                        <div
+                          className="rounded-lg p-4 border border-white/20"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                        >
                           <div className="flex items-center gap-3">
-                            <div className="h-8 w-8 rounded-full bg-emerald-500/10 flex items-center justify-center ring-1 ring-inset ring-emerald-500/20">
-                              <CheckCircle className="h-4 w-4 text-emerald-400" />
+                            <div className="h-8 w-8 rounded-full bg-emerald-400/20 flex items-center justify-center ring-1 ring-inset ring-emerald-400/30">
+                              <CheckCircle className="h-4 w-4 text-emerald-300" />
                             </div>
                             <div>
                               <div className="text-sm font-medium text-white">Ready for UK Age Verification</div>
-                              <div className="text-sm text-gray-400">Compliant with latest regulations</div>
+                              <div className="text-sm text-white/70">Compliant with latest regulations</div>
                             </div>
                           </div>
                         </div>
                       </TabsContent>
 
                       <TabsContent value="aus" className="mt-6 min-h-[380px]">
-                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
-                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
-                            <Rocket className="h-6 w-6 text-gray-400" />
+                        <div
+                          className="rounded-lg p-8 text-center h-full flex flex-col items-center justify-center border border-white/20"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                        >
+                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-white/80" />
                           </div>
                           <h3 className="text-lg font-medium text-white">Coming to Australia</h3>
-                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <p className="text-sm text-white/70 mt-2 mb-6">Join the waitlist for early access</p>
                           <Button
                             onClick={() => {
                               window.open('https://form.typeform.com/to/JOCh5web', '_blank');
                             }}
                             size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
+                            className="bg-white/20 border border-white/30 text-white hover:bg-white/30 hover:text-white px-4 py-2 text-sm font-medium rounded-lg backdrop-blur-sm"
                           >
                             Join Waitlist
                           </Button>
@@ -701,18 +900,21 @@ const App = () => {
                       </TabsContent>
 
                       <TabsContent value="us" className="mt-6 min-h-[380px]">
-                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
-                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
-                            <Rocket className="h-6 w-6 text-gray-400" />
+                        <div
+                          className="rounded-lg p-8 text-center h-full flex flex-col items-center justify-center border border-white/20"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                        >
+                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-white/80" />
                           </div>
                           <h3 className="text-lg font-medium text-white">Coming to United States</h3>
-                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <p className="text-sm text-white/70 mt-2 mb-6">Join the waitlist for early access</p>
                           <Button
                             onClick={() => {
                               window.open('https://form.typeform.com/to/JOCh5web', '_blank');
                             }}
                             size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
+                            className="bg-white/20 border border-white/30 text-white hover:bg-white/30 hover:text-white px-4 py-2 text-sm font-medium rounded-lg backdrop-blur-sm"
                           >
                             Join Waitlist
                           </Button>
@@ -720,47 +922,18 @@ const App = () => {
                       </TabsContent>
 
                       <TabsContent value="eu" className="mt-6 min-h-[380px]">
-                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
-                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
-                            <Rocket className="h-6 w-6 text-gray-400" />
+                        <div
+                          className="rounded-lg p-8 text-center h-full flex flex-col items-center justify-center border border-white/20"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                        >
+                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-white/20 flex items-center justify-center">
+                            <Rocket className="h-6 w-6 text-white/80" />
                           </div>
                           <h3 className="text-lg font-medium text-white">Coming to Europe</h3>
-                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
+                          <p className="text-sm text-white/70 mt-2 mb-6">Join the waitlist for early access</p>
                           <Button
                             size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
-                          >
-                            Join Waitlist
-                          </Button>
-                        </div>
-                      </TabsContent>
-
-                      <TabsContent value="eu" className="mt-6 min-h-[380px]">
-                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
-                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
-                            <Rocket className="h-6 w-6 text-gray-400" />
-                          </div>
-                          <h3 className="text-lg font-medium text-white">Coming to Europe</h3>
-                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
-                          <Button
-                            size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
-                          >
-                            Join Waitlist
-                          </Button>
-                        </div>
-                      </TabsContent>
-
-                      <TabsContent value="eu" className="mt-6 min-h-[380px]">
-                        <div className="rounded-lg bg-gray-800/50 p-8 text-center h-full flex flex-col items-center justify-center">
-                          <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-700/50 flex items-center justify-center">
-                            <Rocket className="h-6 w-6 text-gray-400" />
-                          </div>
-                          <h3 className="text-lg font-medium text-white">Coming to Europe</h3>
-                          <p className="text-sm text-gray-400 mt-2 mb-6">Join the waitlist for early access</p>
-                          <Button
-                            size="sm"
-                            className="bg-gray-800 text-gray-300 hover:bg-gray-700 px-4 py-2 text-sm font-medium rounded-lg"
+                            className="bg-white/20 border border-white/30 text-white hover:bg-white/30 hover:text-white px-4 py-2 text-sm font-medium rounded-lg backdrop-blur-sm"
                           >
                             Join Waitlist
                           </Button>
@@ -786,7 +959,7 @@ const App = () => {
                 </div>
               </div>
             </div>
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-[1600px] px-6 lg:px-8">
               <div className="mx-auto max-w-2xl text-center space-y-4">
                 <div className="flex items-center justify-center gap-2 text-gray-900">
                   <Users className="h-5 w-5" />
@@ -799,8 +972,11 @@ const App = () => {
               <div className="mx-auto mt-16 max-w-5xl">
                 <div className="grid gap-y-8 gap-x-12 lg:grid-cols-2">
                   <div className="space-y-6">
-                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-gray-200">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white">
+                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white shadow-md"
+                        style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+                      >
                         <Building2 className="h-5 w-5" />
                       </div>
                       <div>
@@ -810,8 +986,11 @@ const App = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-gray-200">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white">
+                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white shadow-md"
+                        style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+                      >
                         <Globe className="h-5 w-5" />
                       </div>
                       <div>
@@ -819,8 +998,11 @@ const App = () => {
                         <p className="mt-2 text-base text-gray-600">Comply with digital safety regulations globally</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-gray-200">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white">
+                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white shadow-md"
+                        style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+                      >
                         <Wallet className="h-5 w-5" />
                       </div>
                       <div>
@@ -830,8 +1012,11 @@ const App = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-gray-200">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gray-900 text-white">
+                    <div className="flex items-start gap-4 rounded-xl border border-gray-100 bg-white p-6 transition-all hover:border-primary/20 hover:shadow-lg">
+                      <div
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white shadow-md"
+                        style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+                      >
                         <Building2 className="h-5 w-5" />
                       </div>
                       <div>
@@ -843,19 +1028,25 @@ const App = () => {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <Card className="w-full rounded-2xl bg-gray-900 text-white border-gray-800 shadow-lg">
-                      <CardHeader className="border-b border-white/10 pb-6">
+                    <Card
+                      className="w-full rounded-2xl text-white border-white/30 shadow-2xl"
+                      style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+                    >
+                      <CardHeader className="border-b border-white/20 pb-6">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 ring-1 ring-emerald-500/30 flex items-center justify-center">
-                              <Shield className="h-5 w-5 text-emerald-400" />
+                            <div className="h-10 w-10 rounded-xl bg-emerald-400/20 ring-1 ring-emerald-400/30 flex items-center justify-center">
+                              <Shield className="h-5 w-5 text-emerald-300" />
                             </div>
                             <div>
                               <CardTitle className="text-white text-lg">Privacy-first Age Checks</CardTitle>
-                              <CardDescription className="text-gray-400">UK Online Safety compliant</CardDescription>
+                              <CardDescription className="text-white/70">UK Online Safety compliant</CardDescription>
                             </div>
                           </div>
-                          <Badge variant="secondary" className="bg-white/10 text-white border-white/10">
+                          <Badge
+                            variant="secondary"
+                            className="bg-white/20 text-white border-white/30 backdrop-blur-sm"
+                          >
                             Live
                           </Badge>
                         </div>
@@ -863,45 +1054,45 @@ const App = () => {
 
                       <CardContent className="pt-6">
                         <div className="grid grid-cols-3 gap-4">
-                          <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                            <div className="text-sm text-gray-400">Accuracy</div>
-                            <div className="mt-2 text-2xl font-semibold text-emerald-400">100%</div>
-                            <div className="mt-3 h-2 w-full rounded-full bg-white/10">
-                              <div className="h-2 w-full rounded-full bg-emerald-400/80"></div>
+                          <div className="rounded-xl bg-white/10 p-4 ring-1 ring-white/20 backdrop-blur-sm">
+                            <div className="text-sm text-white/70">Accuracy</div>
+                            <div className="mt-2 text-2xl font-semibold text-emerald-300">100%</div>
+                            <div className="mt-3 h-2 w-full rounded-full bg-white/20">
+                              <div className="h-2 w-full rounded-full bg-emerald-300"></div>
                             </div>
                           </div>
 
-                          <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                            <div className="text-sm text-gray-400">Avg time</div>
+                          <div className="rounded-xl bg-white/10 p-4 ring-1 ring-white/20 backdrop-blur-sm">
+                            <div className="text-sm text-white/70">Avg time</div>
                             <div className="mt-2 text-2xl font-semibold text-white">3-10s</div>
-                            <div className="mt-3 h-2 w-full rounded-full bg-white/10">
-                              <div className="h-2 w-full rounded-full bg-emerald-400/80"></div>
+                            <div className="mt-3 h-2 w-full rounded-full bg-white/20">
+                              <div className="h-2 w-full rounded-full bg-emerald-300"></div>
                             </div>
                           </div>
 
-                          <div className="rounded-xl bg-white/5 p-4 ring-1 ring-white/10">
-                            <div className="text-sm text-gray-400">PII stored</div>
+                          <div className="rounded-xl bg-white/10 p-4 ring-1 ring-white/20 backdrop-blur-sm">
+                            <div className="text-sm text-white/70">PII stored</div>
                             <div className="mt-2 text-2xl font-semibold text-white">0</div>
-                            <div className="mt-3 text-sm text-gray-400">Zero-knowledge proof</div>
+                            <div className="mt-3 text-sm text-white/70">Zero-knowledge proof</div>
                           </div>
                         </div>
 
-                        <ul className="mt-6 space-y-3 text-sm text-gray-300">
+                        <ul className="mt-6 space-y-3 text-sm text-white/90">
                           <li className="flex items-center gap-2">
-                            <span className="h-4 w-4 rounded-full bg-emerald-500/20 ring-1 ring-emerald-500/30 flex items-center justify-center">
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+                            <span className="h-4 w-4 rounded-full bg-emerald-400/20 ring-1 ring-emerald-400/30 flex items-center justify-center">
+                              <CheckCircle className="h-3.5 w-3.5 text-emerald-300" />
                             </span>
                             No personal data stored
                           </li>
                           <li className="flex items-center gap-2">
-                            <span className="h-4 w-4 rounded-full bg-emerald-500/20 ring-1 ring-emerald-500/30 flex items-center justify-center">
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+                            <span className="h-4 w-4 rounded-full bg-emerald-400/20 ring-1 ring-emerald-400/30 flex items-center justify-center">
+                              <CheckCircle className="h-3.5 w-3.5 text-emerald-300" />
                             </span>
                             Instant verification
                           </li>
                           <li className="flex items-center gap-2">
-                            <span className="h-4 w-4 rounded-full bg-emerald-500/20 ring-1 ring-emerald-500/30 flex items-center justify-center">
-                              <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+                            <span className="h-4 w-4 rounded-full bg-emerald-400/20 ring-1 ring-emerald-400/30 flex items-center justify-center">
+                              <CheckCircle className="h-3.5 w-3.5 text-emerald-300" />
                             </span>
                             Global regulation ready
                           </li>
@@ -916,7 +1107,7 @@ const App = () => {
 
           {/* How It Works */}
           <section id="how-it-works" className="bg-gray-50 py-16 sm:py-20">
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
               <div className="text-center">
                 <div className="flex items-center justify-center gap-2 text-gray-900">
                   <Zap className="h-5 w-5" />
@@ -932,7 +1123,17 @@ const App = () => {
                     className="absolute left-[18px] top-14 h-[calc(100%_-_32px)] w-px bg-gray-200 lg:right-0 lg:left-auto lg:top-[18px] lg:h-px lg:w-[calc(100%_-_72px)]"
                     aria-hidden="true"
                   ></span>
-                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-gray-900 group-hover:bg-gray-900">
+                  <div
+                    className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-white group-hover:text-white shadow-md"
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'rgb(0, 0, 238)';
+                      e.currentTarget.style.borderColor = 'white';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'white';
+                      e.currentTarget.style.borderColor = 'rgb(209, 213, 219)';
+                    }}
+                  >
                     <div className="text-gray-600 group-hover:text-white">
                       <Copy className="h-5 w-5" />
                     </div>
@@ -951,7 +1152,7 @@ const App = () => {
                     className="absolute left-[18px] top-14 h-[calc(100%_-_32px)] w-px bg-gray-200 lg:right-0 lg:left-auto lg:top-[18px] lg:h-px lg:w-[calc(100%_-_72px)]"
                     aria-hidden="true"
                   ></span>
-                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-gray-900 group-hover:bg-gray-900">
+                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-white group-hover:text-white">
                     <div className="text-gray-600 group-hover:text-white">
                       <Shield className="h-5 w-5" />
                     </div>
@@ -970,7 +1171,7 @@ const App = () => {
                     className="absolute left-[18px] top-14 h-[calc(100%_-_32px)] w-px bg-gray-200 lg:right-0 lg:left-auto lg:top-[18px] lg:h-px lg:w-[calc(100%_-_72px)]"
                     aria-hidden="true"
                   ></span>
-                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-gray-900 group-hover:bg-gray-900">
+                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-white group-hover:text-white">
                     <div className="text-gray-600 group-hover:text-white">
                       <Brain className="h-5 w-5" />
                     </div>
@@ -985,7 +1186,7 @@ const App = () => {
                   </div>
                 </li>
                 <li className="flex-start group relative flex [counter-increment:steps] lg:flex-col">
-                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-gray-900 group-hover:bg-gray-900">
+                  <div className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white transition-all duration-200 group-hover:border-white group-hover:text-white">
                     <div className="text-gray-600 group-hover:text-white">
                       <CheckCircle className="h-5 w-5" />
                     </div>
@@ -1004,18 +1205,21 @@ const App = () => {
           </section>
 
           {/* CTA Section */}
-          <div className="mx-auto max-w-7xl py-16 sm:py-20 px-6">
-            <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-12 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-16 lg:pt-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900"></div>
+          <div className="mx-auto max-w-[1600px] py-16 sm:py-20 px-6">
+            <div
+              className="relative isolate overflow-hidden px-6 pt-12 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-16 lg:pt-0"
+              style={{ backgroundColor: 'rgb(0, 0, 238)' }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5"></div>
               <div className="relative z-10 mx-auto w-full max-w-2xl text-center lg:py-20">
                 <h2 className="text-4xl font-bold tracking-tight text-white">
                   Ready to Get Started with
                   <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-cyan-300">
                     Age Verification?
                   </span>
                 </h2>
-                <p className="mt-4 text-base leading-relaxed text-gray-300">
+                <p className="mt-4 text-base leading-relaxed text-white/90">
                   Join hundreds of companies already using Reclaim for privacy-preserving age verification.
                 </p>
                 <div className="mt-8 flex items-center justify-center gap-x-4">
@@ -1024,7 +1228,7 @@ const App = () => {
                       window.open('https://app.reclaim.ai/m/subhash/clients', '_blank');
                     }}
                     size="lg"
-                    className="bg-white text-gray-900 cursor-pointer hover:bg-gray-50 px-6 py-2 text-base font-medium rounded-lg shadow-sm hover:shadow transition-all"
+                    className="bg-white text-gray-900 cursor-pointer hover:bg-gray-100 px-6 py-2 text-base font-medium rounded-lg shadow-lg hover:shadow-xl transition-all"
                   >
                     Talk to Founder
                   </Button>
@@ -1037,7 +1241,7 @@ const App = () => {
 
       {/* Footer */}
       <footer className="border-t border-gray-200 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-12 md:py-16">
+        <div className="mx-auto max-w-[1600px] px-6 py-12 md:py-16">
           <div className="flex flex-col gap-12">
             <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
               <div className="flex flex-col gap-8 md:flex-row md:items-center md:gap-12">

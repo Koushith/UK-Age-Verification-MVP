@@ -157,3 +157,61 @@ pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "
 .token.number { color: #F472B6; }
 .token.property { color: #F59E0B; }
 .token.variable { color: #93C5FD; }
+
+/* Enhanced mobile scrolling for code blocks */
+@media (max-width: 768px) {
+  pre[class*="language-"] {
+    padding: 1rem;
+    font-size: 12px;
+    line-height: 1.4;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+
+  .token-line {
+    white-space: nowrap;
+    min-width: max-content;
+  }
+
+  .line-number {
+    width: 2rem;
+    flex-shrink: 0;
+    position: sticky;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+}
+
+/* Better scrollbar styling for mobile */
+@media (max-width: 768px) {
+  pre[class*="language-"]::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  pre[class*="language-"]::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
+
+  pre[class*="language-"]::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+  }
+
+  pre[class*="language-"]::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Ensure code container is scrollable */
+.code-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
