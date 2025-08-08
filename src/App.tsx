@@ -4,7 +4,6 @@ import {
   Shield,
   Zap,
   Copy,
-  Menu,
   Rocket,
   Users,
   Building2,
@@ -14,11 +13,6 @@ import {
   Camera,
   LogIn,
   Clock,
-  Heart,
-  DollarSign,
-  Timer,
-  Database,
-  ShieldCheck,
 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './components/ui/tabs';
 import { NavBar } from './components/navbar/NavBar';
@@ -98,6 +92,7 @@ const QRCodeSection = ({
   requestUrl,
   loadingState,
   proofs,
+  //@ts-ignore
   isMobile,
   onMobileVerification,
 }: {
