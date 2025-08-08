@@ -477,54 +477,54 @@ const App = () => {
                       className="rounded-lg overflow-hidden shadow-lg"
                       style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
                     >
-                      {isNHSAndLive() ? (
-                        // Show NHS integration code
-                        <div className="space-y-6 min-h-[380px]">
-                          <div
-                            className="rounded-lg overflow-hidden shadow-lg"
-                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
-                          >
-                            <div className="flex items-center justify-between px-4 py-2 border-b border-white/20">
-                              <div className="flex items-center gap-3">
-                                <span className="text-sm text-white/90 font-medium">Integration Code</span>
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <button className="flex items-center gap-1 px-3 py-1 rounded hover:bg-white/10 transition-colors text-xs text-white/80 border border-white/20">
-                                      <span>{selectedRegion}</span>
-                                      <ChevronDown className="w-3 h-3" />
-                                    </button>
-                                  </DropdownMenuTrigger>
-                                  <DropdownMenuContent
-                                    align="start"
-                                    className="min-w-[160px] bg-white border border-gray-200 shadow-lg"
-                                  >
-                                    {Object.entries(providerMapping).map(([key, provider]) => (
-                                      <DropdownMenuItem
-                                        key={key}
-                                        onClick={() => setSelectedRegion(key)}
-                                        className="cursor-pointer"
-                                      >
-                                        <span>
-                                          {key === 'UK England' && '🏴󠁧󠁢󠁥󠁮󠁧󠁿'}
-                                          {key === 'UK Wales' && '🏴󠁧󠁢󠁷󠁬󠁳󠁿'}
-                                          {key === 'UK Scotland' && '🏴󠁧󠁢󠁳󠁣󠁴󠁿'}
-                                          {key === 'UK North Ireland' && '🇮🇪'}
-                                          {key === 'US' && '🇺🇸'}
-                                          {key === 'EU' && '🇪🇺'}
-                                          {key === 'AUS' && '🇦🇺'}
-                                          {key === 'IN' && '🇮🇳'}
-                                          {' ' + key}
-                                          {provider.isLive && (
-                                            <span className="text-xs text-white ml-2 font-semibold bg-emerald-600 px-2 py-0.5 rounded-full">
-                                              Live
-                                            </span>
-                                          )}
-                                        </span>
-                                      </DropdownMenuItem>
-                                    ))}
-                                  </DropdownMenuContent>
-                                </DropdownMenu>
-                              </div>
+                      {/* Always show the dropdown header */}
+                      <div className="space-y-6 min-h-[380px]">
+                        <div
+                          className="rounded-lg overflow-hidden shadow-lg"
+                          style={{ backgroundColor: 'rgba(255, 255, 255, 0.15)' }}
+                        >
+                          <div className="flex items-center justify-between px-4 py-2 border-b border-white/20">
+                            <div className="flex items-center gap-3">
+                              <span className="text-sm text-white/90 font-medium">Integration Code</span>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                  <button className="flex items-center gap-1 px-3 py-1 rounded hover:bg-white/10 transition-colors text-xs text-white/80 border border-white/20">
+                                    <span>{selectedRegion}</span>
+                                    <ChevronDown className="w-3 h-3" />
+                                  </button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent
+                                  align="start"
+                                  className="min-w-[160px] bg-white border border-gray-200 shadow-lg"
+                                >
+                                  {Object.entries(providerMapping).map(([key, provider]) => (
+                                    <DropdownMenuItem
+                                      key={key}
+                                      onClick={() => setSelectedRegion(key)}
+                                      className="cursor-pointer"
+                                    >
+                                      <span>
+                                        {key === 'UK England' && '🏴󠁧󠁢󠁥󠁮󠁧󠁿'}
+                                        {key === 'UK Wales' && '🏴󠁧󠁢󠁷󠁬󠁳󠁿'}
+                                        {key === 'UK Scotland' && '🏴󠁧󠁢󠁳󠁣󠁴󠁿'}
+                                        {key === 'UK North Ireland' && '🇮🇪'}
+                                        {key === 'US' && '🇺🇸'}
+                                        {key === 'EU' && '🇪🇺'}
+                                        {key === 'AUS' && '🇦🇺'}
+                                        {key === 'IN' && '🇮🇳'}
+                                        {' ' + key}
+                                        {provider.isLive && (
+                                          <span className="text-xs text-white ml-2 font-semibold bg-emerald-600 px-2 py-0.5 rounded-full">
+                                            Live
+                                          </span>
+                                        )}
+                                      </span>
+                                    </DropdownMenuItem>
+                                  ))}
+                                </DropdownMenuContent>
+                              </DropdownMenu>
+                            </div>
+                            {isNHSAndLive() && (
                               <Button
                                 variant="ghost"
                                 size="sm"
@@ -534,271 +534,290 @@ const App = () => {
                                 <Copy className="h-3 w-3 mr-1" />
                                 <span>Copy</span>
                               </Button>
-                            </div>
-                            <div
-                              className="overflow-x-auto overflow-y-hidden"
-                              style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
-                            >
-                              <Highlight
-                                theme={{
-                                  plain: {
-                                    color: '#f8f8f2',
-                                    backgroundColor: 'transparent',
-                                  },
-                                  styles: [
-                                    {
-                                      types: ['comment', 'prolog', 'doctype', 'cdata'],
-                                      style: {
-                                        color: '#6272a4',
-                                        fontStyle: 'italic',
-                                      },
-                                    },
-                                    {
-                                      types: ['namespace'],
-                                      style: {
-                                        opacity: 0.7,
-                                      },
-                                    },
-                                    {
-                                      types: ['tag', 'operator', 'number'],
-                                      style: {
-                                        color: '#ff79c6',
-                                        fontWeight: 'bold',
-                                      },
-                                    },
-                                    {
-                                      types: ['property', 'function'],
-                                      style: {
-                                        color: '#50fa7b',
-                                        fontWeight: '600',
-                                      },
-                                    },
-                                    {
-                                      types: ['tag-id', 'selector', 'atrule-id'],
-                                      style: {
-                                        color: '#f1fa8c',
-                                      },
-                                    },
-                                    {
-                                      types: ['attr-name'],
-                                      style: {
-                                        color: '#50fa7b',
-                                      },
-                                    },
-                                    {
-                                      types: [
-                                        'boolean',
-                                        'string',
-                                        'entity',
-                                        'url',
-                                        'attr-value',
-                                        'keyword',
-                                        'control',
-                                        'directive',
-                                        'unit',
-                                        'statement',
-                                        'regex',
-                                        'at-rule',
-                                      ],
-                                      style: {
-                                        color: '#f1fa8c',
-                                        fontWeight: '500',
-                                      },
-                                    },
-                                    {
-                                      types: ['variable', 'const', 'class', 'function'],
-                                      style: {
-                                        color: '#8be9fd',
-                                        fontWeight: '600',
-                                      },
-                                    },
-                                    {
-                                      types: ['punctuation'],
-                                      style: {
-                                        color: '#f8f8f2',
-                                      },
-                                    },
-                                    {
-                                      types: ['selector', 'class-name'],
-                                      style: {
-                                        color: '#8be9fd',
-                                        fontWeight: 'bold',
-                                      },
-                                    },
-                                    {
-                                      types: ['important'],
-                                      style: {
-                                        color: '#ff5555',
-                                        fontWeight: 'bold',
-                                      },
-                                    },
-                                    {
-                                      types: ['support', 'builtin'],
-                                      style: {
-                                        color: '#ff79c6',
-                                      },
-                                    },
-                                    {
-                                      types: ['char'],
-                                      style: {
-                                        color: '#ff5555',
-                                      },
-                                    },
-                                  ],
-                                }}
-                                code={ukCode}
-                                language="typescript"
-                              >
-                                {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                                  <pre
-                                    className={`${className} m-0 p-6 text-sm leading-relaxed font-mono min-w-fit`}
-                                    style={{
-                                      ...style,
-                                      background: 'transparent',
-                                      whiteSpace: 'pre',
-                                      wordWrap: 'normal',
-                                      overflowWrap: 'normal',
-                                    }}
-                                  >
-                                    {tokens.map((line, i) => (
-                                      <div key={i} {...getLineProps({ line })} className="relative whitespace-nowrap">
-                                        <span className="inline-block w-8 text-right mr-4 text-white/40 select-none text-xs flex-shrink-0">
-                                          {i + 1}
-                                        </span>
-                                        {line.map((token, key) => {
-                                          const props = getTokenProps({ token });
-                                          return (
-                                            <span
-                                              key={key}
-                                              {...props}
-                                              style={{
-                                                ...props.style,
-                                                textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
-                                              }}
-                                            />
-                                          );
-                                        })}
-                                      </div>
-                                    ))}
-                                  </pre>
-                                )}
-                              </Highlight>
-                            </div>
+                            )}
                           </div>
 
-                          <div className="flex space-x-3">
-                            <Dialog open={isModalOpen} onOpenChange={handleModalOpen}>
-                              <DialogTrigger asChild>
-                                <Button
-                                  size="sm"
-                                  className="bg-white text-gray-900 hover:bg-gray-50 px-4 py-2 text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all"
-                                >
-                                  Try Now
-                                </Button>
-                              </DialogTrigger>
-                              <DialogContent
-                                className={`${
-                                  proofs.length > 0
-                                    ? isMobile
-                                      ? 'w-full max-w-[95vw] h-[90vh] max-h-none'
-                                      : 'w-[1200px]'
-                                    : isMobile
-                                    ? 'w-full max-w-[95vw] h-[85vh] max-h-none'
-                                    : 'w-[896px]'
-                                } max-w-none p-0 gap-0 ${isMobile ? 'overflow-y-auto' : ''}`}
+                          {/* Conditional content based on live status */}
+                          {isNHSAndLive() ? (
+                            // Show integration code for live countries
+                            <>
+                              <div
+                                className="overflow-x-auto overflow-y-hidden"
+                                style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}
                               >
-                                <div className={`${isMobile ? 'p-4' : 'p-8'}`}>
-                                  <div className={`flex items-start justify-between ${isMobile ? 'mb-4' : 'mb-8'}`}>
-                                    <div className="flex items-center gap-4">
+                                <Highlight
+                                  theme={{
+                                    plain: {
+                                      color: '#f8f8f2',
+                                      backgroundColor: 'transparent',
+                                    },
+                                    styles: [
+                                      {
+                                        types: ['comment', 'prolog', 'doctype', 'cdata'],
+                                        style: {
+                                          color: '#6272a4',
+                                          fontStyle: 'italic',
+                                        },
+                                      },
+                                      {
+                                        types: ['namespace'],
+                                        style: {
+                                          opacity: 0.7,
+                                        },
+                                      },
+                                      {
+                                        types: ['tag', 'operator', 'number'],
+                                        style: {
+                                          color: '#ff79c6',
+                                          fontWeight: 'bold',
+                                        },
+                                      },
+                                      {
+                                        types: ['property', 'function'],
+                                        style: {
+                                          color: '#50fa7b',
+                                          fontWeight: '600',
+                                        },
+                                      },
+                                      {
+                                        types: ['tag-id', 'selector', 'atrule-id'],
+                                        style: {
+                                          color: '#f1fa8c',
+                                        },
+                                      },
+                                      {
+                                        types: ['attr-name'],
+                                        style: {
+                                          color: '#50fa7b',
+                                        },
+                                      },
+                                      {
+                                        types: [
+                                          'boolean',
+                                          'string',
+                                          'entity',
+                                          'url',
+                                          'attr-value',
+                                          'keyword',
+                                          'control',
+                                          'directive',
+                                          'unit',
+                                          'statement',
+                                          'regex',
+                                          'at-rule',
+                                        ],
+                                        style: {
+                                          color: '#f1fa8c',
+                                          fontWeight: '500',
+                                        },
+                                      },
+                                      {
+                                        types: ['variable', 'const', 'class', 'function'],
+                                        style: {
+                                          color: '#8be9fd',
+                                          fontWeight: '600',
+                                        },
+                                      },
+                                      {
+                                        types: ['punctuation'],
+                                        style: {
+                                          color: '#f8f8f2',
+                                        },
+                                      },
+                                      {
+                                        types: ['selector', 'class-name'],
+                                        style: {
+                                          color: '#8be9fd',
+                                          fontWeight: 'bold',
+                                        },
+                                      },
+                                      {
+                                        types: ['important'],
+                                        style: {
+                                          color: '#ff5555',
+                                          fontWeight: 'bold',
+                                        },
+                                      },
+                                      {
+                                        types: ['support', 'builtin'],
+                                        style: {
+                                          color: '#ff79c6',
+                                        },
+                                      },
+                                      {
+                                        types: ['char'],
+                                        style: {
+                                          color: '#ff5555',
+                                        },
+                                      },
+                                    ],
+                                  }}
+                                  code={ukCode}
+                                  language="typescript"
+                                >
+                                  {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                                    <pre
+                                      className={`${className} m-0 p-6 text-sm leading-relaxed font-mono min-w-fit`}
+                                      style={{
+                                        ...style,
+                                        background: 'transparent',
+                                        whiteSpace: 'pre',
+                                        wordWrap: 'normal',
+                                        overflowWrap: 'normal',
+                                      }}
+                                    >
+                                      {tokens.map((line, i) => (
+                                        <div key={i} {...getLineProps({ line })} className="relative whitespace-nowrap">
+                                          <span className="inline-block w-8 text-right mr-4 text-white/40 select-none text-xs flex-shrink-0">
+                                            {i + 1}
+                                          </span>
+                                          {line.map((token, key) => {
+                                            const props = getTokenProps({ token });
+                                            return (
+                                              <span
+                                                key={key}
+                                                {...props}
+                                                style={{
+                                                  ...props.style,
+                                                  textShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                                                }}
+                                              />
+                                            );
+                                          })}
+                                        </div>
+                                      ))}
+                                    </pre>
+                                  )}
+                                </Highlight>
+                              </div>
+                            </>
+                          ) : (
+                            // Show coming soon content for waitlist countries
+                            <div className="p-8">
+                              <ComingSoonTab
+                                country={selectedRegion}
+                                waitlistUrl="https://form.typeform.com/to/JOCh5web"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Rest of the content only for live countries */}
+                        {isNHSAndLive() && (
+                          <>
+                            <div className="flex space-x-3">
+                              <Dialog open={isModalOpen} onOpenChange={handleModalOpen}>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    size="sm"
+                                    className="bg-white text-gray-900 hover:bg-gray-50 px-4 py-2 text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all"
+                                  >
+                                    Try Now
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent
+                                  className={`${
+                                    proofs.length > 0
+                                      ? isMobile
+                                        ? 'w-full max-w-[95vw] h-[90vh] max-h-none'
+                                        : 'w-[1200px]'
+                                      : isMobile
+                                      ? 'w-full max-w-[95vw] h-[85vh] max-h-none'
+                                      : 'w-[896px]'
+                                  } max-w-none p-0 gap-0 ${isMobile ? 'overflow-y-auto' : ''}`}
+                                >
+                                  <div className={`${isMobile ? 'p-4' : 'p-8'}`}>
+                                    <div className={`flex items-start justify-between ${isMobile ? 'mb-4' : 'mb-8'}`}>
+                                      <div className="flex items-center gap-4">
+                                        <div
+                                          className={`${
+                                            isMobile ? 'w-12 h-12' : 'w-16 h-16'
+                                          } rounded-xl overflow-hidden bg-white border border-gray-100 p-2 flex items-center justify-center`}
+                                        >
+                                          <img
+                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/2560px-National_Health_Service_%28England%29_logo.svg.png"
+                                            alt="NHS"
+                                            className="w-full h-full object-contain"
+                                          />
+                                        </div>
+                                        <div>
+                                          <h2
+                                            className={`${
+                                              isMobile ? 'text-xl' : 'text-2xl'
+                                            } font-semibold text-gray-900`}
+                                          >
+                                            Prove your age with UK NHS Age Verification
+                                          </h2>
+                                          <p className={`mt-1 ${isMobile ? 'text-sm' : 'text-base'} text-gray-500`}>
+                                            Prove your age in seconds. No screenshots. No uploads.
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div
+                                      className={`${isMobile ? 'flex flex-col gap-6' : 'flex gap-12'} ${
+                                        isMobile ? 'min-h-[300px]' : 'min-h-[400px]'
+                                      }`}
+                                    >
+                                      {/* Left Side - Instructions */}
+                                      <div className={`${isMobile ? 'w-full order-2' : 'flex-1 w-1/2'} space-y-8`}>
+                                        <div>
+                                          <h3
+                                            className={`${
+                                              isMobile ? 'text-base' : 'text-lg'
+                                            } font-medium text-gray-900 ${isMobile ? 'mb-4' : 'mb-6'}`}
+                                          >
+                                            Follow these steps:
+                                          </h3>
+                                          <VerificationSteps isMobile={isMobile} />
+                                        </div>
+                                      </div>
+
+                                      {/* Right Side - QR Code/Button and Loading */}
                                       <div
                                         className={`${
-                                          isMobile ? 'w-12 h-12' : 'w-16 h-16'
-                                        } rounded-xl overflow-hidden bg-white border border-gray-100 p-2 flex items-center justify-center`}
+                                          isMobile ? 'w-full order-1' : 'flex-1 w-1/2'
+                                        } flex flex-col items-center justify-center space-y-8`}
                                       >
-                                        <img
-                                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/National_Health_Service_%28England%29_logo.svg/2560px-National_Health_Service_%28England%29_logo.svg.png"
-                                          alt="NHS"
-                                          className="w-full h-full object-contain"
+                                        <QRCodeSection
+                                          requestUrl={requestUrl}
+                                          loadingState={loadingState}
+                                          proofs={proofs}
+                                          isMobile={isMobile}
+                                          onMobileVerification={handleMobileVerification}
+                                        />
+
+                                        <VerificationResults
+                                          proofs={proofs}
+                                          isMobile={isMobile}
+                                          getExtractedParameters={getExtractedParameters}
                                         />
                                       </div>
-                                      <div>
-                                        <h2
-                                          className={`${isMobile ? 'text-xl' : 'text-2xl'} font-semibold text-gray-900`}
-                                        >
-                                          Prove your age with UK NHS Age Verification
-                                        </h2>
-                                        <p className={`mt-1 ${isMobile ? 'text-sm' : 'text-base'} text-gray-500`}>
-                                          Prove your age in seconds. No screenshots. No uploads.
-                                        </p>
-                                      </div>
                                     </div>
                                   </div>
+                                </DialogContent>
+                              </Dialog>
+                            </div>
 
-                                  <div
-                                    className={`${isMobile ? 'flex flex-col gap-6' : 'flex gap-12'} ${
-                                      isMobile ? 'min-h-[300px]' : 'min-h-[400px]'
-                                    }`}
-                                  >
-                                    {/* Left Side - Instructions */}
-                                    <div className={`${isMobile ? 'w-full order-2' : 'flex-1 w-1/2'} space-y-8`}>
-                                      <div>
-                                        <h3
-                                          className={`${isMobile ? 'text-base' : 'text-lg'} font-medium text-gray-900 ${
-                                            isMobile ? 'mb-4' : 'mb-6'
-                                          }`}
-                                        >
-                                          Follow these steps:
-                                        </h3>
-                                        <VerificationSteps isMobile={isMobile} />
-                                      </div>
-                                    </div>
-
-                                    {/* Right Side - QR Code/Button and Loading */}
-                                    <div
-                                      className={`${
-                                        isMobile ? 'w-full order-1' : 'flex-1 w-1/2'
-                                      } flex flex-col items-center justify-center space-y-8`}
-                                    >
-                                      <QRCodeSection
-                                        requestUrl={requestUrl}
-                                        loadingState={loadingState}
-                                        proofs={proofs}
-                                        isMobile={isMobile}
-                                        onMobileVerification={handleMobileVerification}
-                                      />
-
-                                      <VerificationResults
-                                        proofs={proofs}
-                                        isMobile={isMobile}
-                                        getExtractedParameters={getExtractedParameters}
-                                      />
-                                    </div>
-                                  </div>
+                            {/* Status */}
+                            <div
+                              className="rounded-lg p-4 border border-white/20"
+                              style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="h-8 w-8 rounded-full bg-emerald-400/20 flex items-center justify-center ring-1 ring-inset ring-emerald-400/30">
+                                  <CheckCircle className="h-4 w-4 text-emerald-300" />
                                 </div>
-                              </DialogContent>
-                            </Dialog>
-                          </div>
-
-                          {/* Status */}
-                          <div
-                            className="rounded-lg p-4 border border-white/20"
-                            style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-                          >
-                            <div className="flex items-center gap-3">
-                              <div className="h-8 w-8 rounded-full bg-emerald-400/20 flex items-center justify-center ring-1 ring-inset ring-emerald-400/30">
-                                <CheckCircle className="h-4 w-4 text-emerald-300" />
-                              </div>
-                              <div>
-                                <div className="text-sm font-medium text-white">Ready for UK Age Verification</div>
-                                <div className="text-sm text-white/70">Compliant with latest regulations</div>
+                                <div>
+                                  <div className="text-sm font-medium text-white">Ready for UK Age Verification</div>
+                                  <div className="text-sm text-white/70">Compliant with latest regulations</div>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      ) : (
-                        // Show ComingSoon component
-                        <ComingSoonTab country={selectedRegion} waitlistUrl="https://form.typeform.com/to/JOCh5web" />
-                      )}
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
