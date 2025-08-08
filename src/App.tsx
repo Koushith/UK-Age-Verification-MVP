@@ -257,43 +257,48 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isMobile = useIsMobile();
-  const [selectedRegion, setSelectedRegion] = useState('UK NHS England');
+  const [selectedRegion, setSelectedRegion] = useState('UK England');
 
   // Provider ID mapping for different regions and countries
   const providerMapping = {
-    'UK NHS England': {
+    'UK England': {
       id: '47b3843c-e0a1-4462-8461-77d22ad768aa',
-      name: 'UK NHS Age Verification',
+      name: 'UK England Age Verification',
       isLive: true,
     },
-    'Wales NHS': {
+    'UK Wales': {
       id: '5a8304a3-abf3-4cc4-bc3d-a4d53ff2d221',
-      name: 'Wales NHS Age Verification',
+      name: 'UK Wales Age Verification',
       isLive: true,
-    },
-    'UK North Ireland': {
-      id: '',
-      name: 'UK North Ireland Age Verification',
-      isLive: false,
     },
     'UK Scotland': {
       id: '',
       name: 'UK Scotland Age Verification',
       isLive: false,
     },
-    Australia: {
+    'UK North Ireland': {
+      id: '',
+      name: 'UK North Ireland Age Verification',
+      isLive: false,
+    },
+    US: {
+      id: '',
+      name: 'US Age Verification',
+      isLive: false,
+    },
+    EU: {
+      id: '',
+      name: 'EU Age Verification',
+      isLive: false,
+    },
+    AUS: {
       id: '',
       name: 'Australia Age Verification',
       isLive: false,
     },
-    'United States': {
+    IN: {
       id: '',
-      name: 'United States Age Verification',
-      isLive: false,
-    },
-    Europe: {
-      id: '',
-      name: 'Europe Age Verification',
+      name: 'India Age Verification',
       isLive: false,
     },
   };
@@ -301,7 +306,7 @@ const App = () => {
   // Get current provider ID based on selection
   const getCurrentProviderId = () => {
     //@ts-ignore
-    return providerMapping[selectedRegion]?.id || providerMapping['UK NHS England'].id;
+    return providerMapping[selectedRegion]?.id || providerMapping['UK England'].id;
   };
 
   // Check if current selection is NHS and live
@@ -500,13 +505,14 @@ const App = () => {
                                         className="cursor-pointer"
                                       >
                                         <span>
-                                          {key === 'UK NHS England' && '🏴󠁧󠁢󠁥󠁮󠁧󠁿'}
-                                          {key === 'Wales NHS' && '🏴󠁧󠁢󠁷󠁬󠁳󠁿'}
-                                          {key === 'UK North Ireland' && '🇮🇪'}
+                                          {key === 'UK England' && '🏴󠁧󠁢󠁥󠁮󠁧󠁿'}
+                                          {key === 'UK Wales' && '🏴󠁧󠁢󠁷󠁬󠁳󠁿'}
                                           {key === 'UK Scotland' && '🏴󠁧󠁢󠁳󠁣󠁴󠁿'}
-                                          {key === 'Australia' && '🇦🇺'}
-                                          {key === 'United States' && '🇺🇸'}
-                                          {key === 'Europe' && '🇪🇺'}
+                                          {key === 'UK North Ireland' && '🇮🇪'}
+                                          {key === 'US' && '🇺🇸'}
+                                          {key === 'EU' && '🇪🇺'}
+                                          {key === 'AUS' && '🇦🇺'}
+                                          {key === 'IN' && '🇮🇳'}
                                           {' ' + key}
                                           {provider.isLive && (
                                             <span className="text-xs text-white ml-2 font-semibold bg-emerald-600 px-2 py-0.5 rounded-full">
