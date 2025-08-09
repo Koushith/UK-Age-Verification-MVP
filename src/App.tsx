@@ -710,7 +710,7 @@ const App = () => {
                                 <DialogTrigger asChild>
                                   <Button
                                     size="sm"
-                                    className="bg-white text-gray-900 hover:bg-gray-50 px-4 py-2 text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all"
+                                    className="bg-white text-gray-900 hover:bg-gray-50 ml-4 px-4 py-2 text-sm font-medium rounded-lg shadow-sm hover:shadow transition-all"
                                   >
                                     Try Now
                                   </Button>
